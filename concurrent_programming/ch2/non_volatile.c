@@ -15,7 +15,7 @@ _wait_while_0:                          ; @wait_while_0
 .subsections_via_symbols
 ```
 
-This is so different from the code in the book
+This is so different from the code of the book
 ```
 wait_while_0:
 	ldr w8, [x0]
@@ -24,6 +24,9 @@ wait_while_0:
 .LBB0_2:
 	b	.LBB0_2		; goto .LBB0_2
 ```
+
+
+On Linux VM, it produces equivalent x86 asm to the code of the book.
 */
 void	wait_while_0(int *p) {
 	while (*p == 0) {}
