@@ -1,0 +1,25 @@
+# Race Condition
+
+```
+shared value	v;
+
+function f() {
+	tmp = read (v);
+	write (v = tmp + 1)
+}
+
+create_process(f); // process A
+create_process(f); // process B
+```
+
+## Bad Case
+A.read  // 0
+A.write // 0+1
+B.read  // 1
+B.write // 1+1
+A.read  // 2
+B.read  // 2
+A.write // 2+1
+B.write // 2+1
+
+Final value is 3, but expected to be 4!
