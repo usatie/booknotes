@@ -1,0 +1,92 @@
+# Atomic Operation
+State during the process cannot be observed.
+AND
+If the process fails the state is completely restored to be the state just before the process.
+
+## 3.2.1 Compare and Swap (CAS)
+This code is NOT atomic, but it represents the meaning of CAS.
+```
+bool	compare_and_swap(uint64_t *p, uint64_t val, uint64_t newval)
+{
+	if (*p != val) {
+		return false;
+	}
+	*p = newval;
+	return true;
+}
+```
+	cmpq	%rsi, (%rdi)	; %rsi == (%rdi)
+	jne		LBBO_1			; if %rsi != (%rdi) then goto LBBO_1
+	movq	%rdx, (%rdi)	; (%rdi) = %rdx
+	movl	$1, %eax		; %eax = 1
+	retq
+LBBO_1:
+	xorl	%eax, %eax		; %eax = 0
+
+```
+bool	compare_and_swap(uint64_t *p, uint64_t val, uint64_t newval)
+{
+	return __sync_bol_compare_and_swap(p, val, newval);
+}
+```
+; rdi = p, rsi = val, rdx = newval
+	mvoq			%rsi, %rax		; %rax = %rsi (2nd arg val)
+	xorl			%ecx, %ecx		; %ecx = 0
+	lock cmpxchgq	%rdx, (%rdi)	; CAS
+	sete			%cl				; %cl = ZF flag, %cl is lower 8 bits of ecx register
+	movl			%ecx, %eax		; %eax = %ecx
+	retq
+
+`cmpxchgq %rdx, %(rdi)` implicitly takes %rax as the third argument
+```
+if (%rax == (%rdi)) {
+	(%rdi) = %rdx
+	ZF = 1
+} else {
+	%rax = (%rdi)		; What for???
+	ZF = 0
+}
+```
+
+```
+%rax = %rsi
+%ecx = 0
+---atomic operation---
+if (%rax == (%rdi)) {
+	(%rdi) = %rdx
+	ZF = 1
+} else {
+	%rax = (%rdi)
+	ZF = 0
+}
+---end---
+%cl = ZF 	; %ecx = ZF
+%eax = %ecx
+retq		; return (%eax)
+```
+
+## 3.2.2 Test and Set
+This code is NOT atomic, but it represents the meaning of TAS.
+```
+bool	test_and_set(bool *p)
+{
+	if (*p) {
+		return true;
+	} else {
+		*p = true;
+		return false;
+	}
+}
+
+type __sync_lock_test_and_set(type *p, type val) {
+	type tmp = *p;
+	*p = val;
+	return tmp;
+}
+```
+
+movb	$1, %al		; %al = 1, %al is lower 8 bits of eax register
+xchgb	%al, (%rdi)	; TAS, swap %al and %rdi
+andb	$1, %al		; %al = %al & 1, THIS IS UNNECESSARY but compiler outputs this. Why?
+retq
+
