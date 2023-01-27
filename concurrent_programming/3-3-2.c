@@ -39,15 +39,22 @@ void	*some_func4(void *arg) {
 	return (NULL);
 }
 
+void	*some_func5(void *arg) {
+	for (int i = 0; i < 10000000; i++) {
+		__sync_fetch_and_add(&cnt, 1);
+	}
+	return (NULL);
+}
+
 // gcc 3-3-2.c 3-2.c 3-3.c && ./a.out
 int	main(int argc, char *argv[]) {
 	pthread_t	th1, th2;
 
-	if (pthread_create(&th1, NULL, some_func4, NULL) != 0) {
+	if (pthread_create(&th1, NULL, some_func5, NULL) != 0) {
 		perror("pthread_create");
 		exit(-1);
 	}
-	if (pthread_create(&th2, NULL, some_func4, NULL) != 0) {
+	if (pthread_create(&th2, NULL, some_func5, NULL) != 0) {
 		perror("pthread_create");
 		exit(-1);
 	}
