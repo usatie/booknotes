@@ -1,54 +1,49 @@
+// return_type func_name (args) {body}
+
+int plus ( int x, int y )
+{
+	return x + y ;
+}
+
+double plus ( double x, double y )
+{
+	return x + y ;
+}
+
+std::string plus ( std::string x, std::string y )
+{
+	return x + y ;
+}
+
+
+/* Compile error
+int f()	{}
+*/
+
+// ok
+void f(){}
+
+auto a() {}
+auto b() { return 0 ; }
+auto c() { return 0.0 ; }
+auto d() { return ""s ; }
+
+/* compile error type 
+auto e()
+{
+	return 0 ;
+	return 0.0 ;
+}
+*/
+
 int	main()
 {
-	// lambda statement
-	auto print = [](auto x)
-	{
-		std::cout << x << "\n"s ;
-	} ;
-	print(123) ;
-	print(3.14) ;
-	print("hello") ;
+	auto x = plus( 1, 2 ) ;
+	std::cout << x << "\n" ;
 
-	auto print_two = []( auto x, auto y )
-	{
-		std::cout << x << " "s << y << "\n"s ;
-	} ;
+	auto d = plus( 1.1, 2.04 ) ;
+	std::cout << d << "\n" ;
 
-	print_two( 1, 2 ) ;
-	print_two( "Pi is", 3.14 ) ;
-
-	auto no_args = []()
-	{
-		std::cout << "Nothing\n" ;
-	} ;
-	no_args() ;
-
-	// () is operator
-	// operator ()
-	auto donothing = [](){} ;
-	donothing() ;
-	donothing     (     ) ;
-
-	// operato() on lambda itself
-	[](){}() ;
-	
-	// Return value
-	auto plus = []( auto x, auto y )
-	{
-		return x + y ;
-	} ;
-	std::cout
-		<< plus( 1, 2 ) << "\n"s
-		<< plus( 1.5, 0.5 ) << "\n"s
-		<< plus( "123"s, "456"s ) << "\n"s ;
-
-	// Exit on return
-	auto f = []()
-	{
-		std::cout << "f is called.\n"s ;
-		return 0 ;
-		std::cout << "f returned zero.\n" ;
-	} ;
-
-	auto result = f() ;
+	auto s = plus( "hello"s, "world"s ) ;
+	std::cout << s << "\n" ;
 }
