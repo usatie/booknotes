@@ -1,16 +1,41 @@
 int	main()
 {
-	// compile error
-	// auto x = 1 + 1 
-
+	/*
+	// statements
 	auto x = 1 + 1 ;
-	// unused warning
-	auto y = x + 1 ;
+	std::cout << x ;
+	;
+	*/
 
-	std::cout
-		<< "EXIT_SUCCESS: "s << EXIT_SUCCESS << "\n"s
-		<< "EXIT_FAILURE: "s << EXIT_FAILURE << "\n"s ;
+	// compound statements
+	{
+		std::cout << "hello\n"s ;
+		std::cout << "hello\n"s ;
+	}
+	{ std::cout << "world\n"s ; }
+	{ }
+	{{{}}}
 
-	// compile error
-	// "hello"s << 1 ;
+	// variable scope
+	auto a = 0 ;
+	{
+		auto b = 0 ;
+		{
+			auto c = 0 ;
+		}
+	}
+
+	// shadow
+	auto x = 0 ;
+	{
+		auto x = 1 ;
+		{
+			auto x = 2 ;
+			std::cout << x << "\n"s ;
+		}
+		std::cout << x << "\n"s ;
+		x = 42 ;
+		std::cout << x << "\n"s ;
+	}
+	std::cout << x << "\n"s ;
 }
