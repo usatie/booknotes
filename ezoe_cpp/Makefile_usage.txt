@@ -1,0 +1,53 @@
+target : prerequisites
+	recipe
+
+program : source
+	cat source > program
+
+source : source01 source02 source03
+	cat source01 source02 source03 > source
+
+# comment
+variable = foobar
+target: $(variable)
+target: foobar
+
+# File name of the target
+target: 
+	echo $@
+
+# First prerequisite
+target: A B C
+	echo $<
+
+# All prerequisites
+target : A B C
+	echo $^
+
+# Combination
+target : prerequisite
+	cat prerequisite > target
+
+target : prerequisite
+	cat $< > $@
+
+# PHONY simply execute target
+hi :
+	echo hi
+
+hello :
+	echo hello
+
+.PHONY: hi hello
+
+# Example
+hello : hello.cpp
+	g++ -o $@ $<
+
+run : hello
+	./hello
+
+clean :
+	rm -rf ./hello
+
+.PHONY : run clean
