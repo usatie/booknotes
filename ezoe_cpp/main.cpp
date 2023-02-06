@@ -1,16 +1,11 @@
 #include "all.h"
 
-// g++ -std=c++17 -Wall --pedantic-errors -o hello hello.cpp
-// man gcc
-// g++ -include all.h -o program main.cpp
-// time g++ -std=c++17 -Wall --pedantic-errors -include all.h -o program main.cpp
-// g++ -std=c++17 -Wall --pedantic-errors -x c++-header -o all.h.gch all.h
-// time g++ -std=c++17 -Wall --pedantic-errors -include all.h -o program hello.cpp
 int	main()
 {
+	// What's the difference of "" and ""s ?
 	std::cout << "hello"s ;
-	std::cout << "one "s ;
-	std::cout << "two "s ;
-	std::cout << "three "s ;
-	std::cout << "aaa"s << "bbb"s << "ccc"s ;
+	std::cout << "hello" ;
+	std::cout << "aaa\nbbb\nccc"s ;
+	std::cout << "\\n is a new-line.\n"s ;
+	std::cout << "hello"s + "world"s ;
 }
