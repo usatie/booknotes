@@ -8,5 +8,9 @@
 // time g++ -std=c++17 -Wall --pedantic-errors -include all.h -o program hello.cpp
 int	main()
 {
-	std::cout << "hello" ;
+	std::cout << "hello"s ;
+	std::cout << "one "s ;
+	std::cout << "two "s ;
+	std::cout << "three "s ;
+	std::cout << "aaa"s << "bbb"s << "ccc"s ;
 }
