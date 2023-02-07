@@ -1,97 +1,126 @@
+bool is_rocket_ready_to_launch()
+{
+	return false;
+}
+
 int	main()
 {
-	auto a = 12345 + 6789 ;
-	auto b = 8073 * 132 / 5 ;
-	auto sum = a + b ;
-
-	std::cout
-		<< "a=12345 + 6789="s << a << "\n"s
-		<< "b=8073 * 132 / 5="s << b << "\n"s
-		<< "a+b="s << sum << "\n"s ;
-	if ( a < b )
+	// expression statement
 	{
-		std::cout << b << "\n"s ;
-	}
-	else
-	{
-		std::cout << a << "\n"s ;
+		1 + 1 ;
+		1 == 1 ;
+		1 < 2 ;
 	}
 
-	if ( 2 < 1 )
-		std::cout << "sentence 1.\n"s ;
-	std::cout << "sentence 2.\n"s ;
-
-	if ( 1 < 2 )
+	// expression
 	{
-		std::cout << "yes!\n"s ;
-		std::cout << "yes!\n"s ;
+		auto a = 123 ;
+		auto b = a + 4 ;
+		auto c = 1.0 ;
+		auto d = "hello"s ;
 	}
 
+	// conditoin expression
 	{
-		auto a = "dog"s ;
-		auto b = "dog"s ;
-		auto c = "cat"s ;
+		if ( 1 == 1 )
+		{ std::cout << "1 == 1 is true.\n"s ; }
+		else
+		{ std::cout << "1 == 1 is false.\n"s ; }
+
+		auto x = 1 == 1 ;
+		if ( x )
+		{ std::cout << "1 == 1 is true.\n"s ; }
+		else
+		{ std::cout << "1 == 1 is false.\n"s ; }
+
+		auto a = 1 == 1 ;
+		auto b = 1 != 1 ;
+		std::cout << a << "\n"s << b ;
+	}
+	// expression
+	{
+		if ( 1 ) std::cout << "1\n"s ;
+		if ( 0 ) std::cout << "0\n"s ;
+		if ( 123 ) std::cout << "123\n"s ;
+		if ( -1 ) std::cout << "-1\n"s ;
+	}
+	// bool
+	{
+		auto a = 1 == 1 ;
+		bool A = 1 == 1 ;
+		bool correct = true ;
+		bool wrong = false ;
+
+		// after this, boolean value is printed as true/false
+		std::cout << std::boolalpha ;
+	   	std::cout << true << "\n"s << false << "\n"s ;
+		// after this, boolean value is printed as 1/0
+		std::cout << std::noboolalpha ;
+	   	std::cout << true << "\n"s << false << "\n"s ;
+	}
+	{
+		bool a = 1 == 1 ;
+		bool b = 1 != 1 ;
+		bool c = 1 < 2 ;
+		bool d = 1 > 2 ;
+
+		if ( true )
+			std::cout << "true\n"s ;
+		if ( false )
+			std::cout << "false\n"s ;
+	}
+	{
+		std::cout << "operator!\n"s ;
+		std::cout << std::boolalpha ;
+		std::cout << !true << "\n"s ;
+		std::cout << !false << "\n"s ;
 		
-		if ( a == b )
+		if ( !is_rocket_ready_to_launch() )
 		{
-			std::cout << "a == b\n"s ;
-		}
-		else
-		{
-			std::cout << "a != b\n" ;
-		}
-
-		if ( a == c )
-		{
-			std::cout << "a == c\n"s ;
-		}
-		else
-		{
-			std::cout << "a != c\n" ;
-		}
-	}
-
-	{
-		auto dog = "dog"s ;
-		auto cat = "cat"s ;
-		
-		if ( cat < dog )
-		{
-			std::cout << "cat is smaller.\n"s ;
-		}
-		else
-		{
-			std::cout << "dog is smaller.\n" ;
-		}
-
-		auto longcat = "longcat"s ;
-		if ( longcat > cat )
-		{
-			std::cout << "Longcat is Looong.\n"s ;
-		}
-		else
-		{
-			std::cout << "Longcat isn't that long. Sigh.\n" ;
+			std::cout << "Standby...\n" ;
 		}
 	}
 	{
-		auto x = ""s ;
+		std::cout << std::boolalpha ;
+		auto print = [](auto b)
+		{ std::cout << b << "\n"s ; } ;
 		
-		if ( "a"s < "b"s )
-		{ x = "a"s ; }
-		else
-		{ x = "b"s ; }
+		print( true  == true  ) ;
+		print( true  == false ) ;
+		print( false == true  ) ;
+		print( false == false ) ;
+		
+		print( true  != true  ) ;
+		print( true  != false ) ;
+		print( false != true  ) ;
+		print( false != false ) ;
+		
+		bool b = ( 1 < 2 ) == true ;
 
-		std::cout << x << "\n" ;
+		print( true  && true  ) ;
+		print( true  && false ) ;
+		print( false && true  ) ;
+		print( false && false ) ;
+
+		print( true  || true  ) ;
+		print( true  || false ) ;
+		print( false || true  ) ;
+		print( false || false ) ;
 	}
 	{
-		auto x = ""s ;
-		
-		if ( "aa"s < "ab"s )
-		{ x = "aa"s ; }
-		else
-		{ x = "ab"s ; }
+		double temperature = 36.6 ;
 
-		std::cout << x << "\n" ;
+		if ( ( temperature >= 36.1 ) && ( temperature <= 37.2 ) )
+		{ std::cout << "Good.\n"s ; }
+		else
+		{ std::cout << "Bad.\n"s ; }
+	}
+	{
+		double height = 1.3 ;
+
+		if ( ( height < 1.1 ) && ( height > 1.9 ) )
+		{ std::cout << "No.\n"s ; }
+		else
+		{ std::cout << "Yes.\n"s ; }
 	}
 }
