@@ -1,49 +1,37 @@
 int	main()
 {
-	// Short-circuit evaluation
-	// Minimal evaluation
+	// unused variable 
 	{
-		auto a = []()
-		{
-			std::cout << "a\n"s ;
-			return false ;
-		} ;
-		auto b = []()
-		{
-			std::cout << "b\n"s ;
-			return true ;
-		} ;
+		auto x = 1 ;
+		auto y = 2 ;
 		
-		bool c = a() && b() ;
-		std::cout << std::boolalpha << c << "\n"s ;
+		std::cout << x + x << "\n"s ;
 	}
-	// Boolean Conversions
+	// assignment used as truth value
 	{
-		std::cout << std::boolalpha ;
+		auto x = 0 ;
 
-		bool b = true < false ;
-		std::cout << b << "\n"s ;
-
-		auto print = [](auto x)
-		{ std::cout << x << "\n"s ; } ;
-
-		print( true  + true  ) ;
-		print( true  + false ) ;
-		print( false + true  ) ;
-		print( false + false ) ;
+		if ( x = 123 )
+			std::cout << "x is 123.\n"s ;
+		else
+			std::cout << "x is NOT 123.\n"s ;
 	}
 	{
-		auto print = [](auto x)
-		{ std::cout << x << "\n"s ; } ;
+		auto x = 0 ;
 
-		bool Zero = 0 ;
-		bool One = 1 ;
-		bool minus_one = -1 ;
-		bool OneTwoThree = 123 ;
+		bool b1 = x = 1 ;
+		if ( x = 1 ) std::cout << "true assignment\n"s ;
 
-		print( Zero ) ;
-		print( One ) ;
-		print( minus_one ) ;
-		print( OneTwoThree ) ;
+		bool b0 = x = 0 ;
+		if ( x = 0 ) std::cout << "false assignment\n"s ;
+	}
+	// no warning
+	{
+		auto x = 0 ;
+
+		if ( ( x = 0 ) )
+			std::cout << "TRUE!.\n"s ;
+		else
+			std::cout << "FALSE!.\n"s ;
 	}
 }
