@@ -1,25 +1,54 @@
-// for ( init ; cond ; increment ) statement
-void	print_n( int n )
+void	until_ten( int x )
 {
-	for ( int i = 0 ; i < n ; ++i )
-		std::cout << i << " "s ;
-	std::cout << "\n"s ;
+	if ( x > 10 )
+		return ;
+	else
+	{
+		std::cout << x << "\n"s ;
+		until_ten( x + 1 ) ;
+	}
 }
 
-void	print_times_table_for()
+int	convert( int n )
 {
-	for ( int a = 1 ; a <= 9 ; ++a )
-	{
-		for ( int b = 1 ; b <= 9 ; ++b )
-		{
-			std::cout << a * b << "\t"s ;
-		}
-		std::cout << "\n"s ;
-	}
+	if ( n < 0 )
+		return - convert( -n ) ;
+	if ( n <= 1 )
+		return n ;
+	return ( n % 10 ) + ( 2 * convert(n / 10) );
+}
+
+int	input()
+{
+	std::cout << "> "s ;
+	int x{} ;
+	std::cin >> x ;
+	return x ;
+}
+
+void	output( int binary )
+{
+	std::cout << binary << "\n"s ;
+}
+
+// tail recursion
+int	factorial ( int n )
+{
+	if ( n < 1 )
+		return 0 ;
+	else if ( n == 1 )
+		return 1 ;
+	else
+		return n * factorial( n - 1 ) ;
 }
 
 int	main()
 {
-	print_n( 100 ) ;
-	print_times_table_for() ;
+	until_ten(1) ;
+	while ( true )
+	{
+		auto decimal = input() ;
+		auto binary = convert(decimal) ;
+		output(binary) ;
+	}
 }
