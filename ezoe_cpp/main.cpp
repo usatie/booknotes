@@ -1,8 +1,3 @@
-void	hello()
-{
-	std::cout << "hello\n"s ;
-}
-
 int	input()
 {
 	std::cout << ">"s ;
@@ -11,46 +6,71 @@ int	input()
 	return x ;
 }
 
-void	hello_n( int n )
+void	sum_input_loop()
 {
-	int	i = 0;
-	if ( n < 0 )
-		return ;
-loop:
-	if ( i != n )
+	int sum = 0 ;
+	int x {} ;
+
+	while ( ( x = input() ) != 0 )
 	{
-		std::cout << "hello\n"s ;
-		++i ;
-		goto loop ;
+		sum += x ;
+		std::cout << sum << "\n"s ;
 	}
+}
+
+void	print_times_table_while()
+{
+	int a = 1 ;
+	while ( a <= 9 )
+	{
+		int b = 1 ;
+		while ( b <= 9 )
+		{
+			std::cout << a * b << "\t"s ;
+			++b ;
+		}
+		std::cout << "\n"s ;
+		++a ;
+	}
+}
+
+void	print_times_table_goto_ezoe()
+{
+	int a = 1 ;
+loop_outer:
+	if ( a <= 9 )
+	{
+		int b = 1 ;
+loop_inner:
+		if ( b <= 9 )
+		{
+			std::cout << a * b << "\t"s ;
+			++b ;
+			goto loop_inner ;
+		}
+		std::cout << "\n"s ;
+		++a ;
+		goto loop_outer ;
+	}
+}
+
+void	print_times_table_goto()
+{
+	int a = 1 ;
+loop1:
+	int b = 1 ;
+loop2:
+	std::cout << a * b << "\t"s ;
+	++b ;
+	if ( b <= 9 )
+		goto loop2 ;
+	std::cout << "\n"s ;
+	++a ;
+	if ( a <= 9 )
+		goto loop1 ;
 }
 
 int	main()
 {
-	/*
-	std::cout << 1 ;
-	goto skip ;
-	std::cout << 2;
-skip:
-	std::cout << 3 ;
-	*/
-
-	/*
-loop:
-	hello() ;
-	goto loop ;
-	*/
-
-	/*
-	int sum = 0 ;
-loop:
-	int x = input() ;
-	if ( x != 0 )
-	{
-		sum += x ;
-		std::cout << sum << "\n" ;
-		goto loop ;
-	}
-	*/
-	hello_n(10);
+	print_times_table_goto_ezoe() ;
 }
