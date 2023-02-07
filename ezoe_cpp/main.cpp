@@ -1,37 +1,66 @@
 int	main()
 {
-	// unused variable 
+	double height{}  ;
+	std::cout << "height(m)>"s ;
+	std::cin >> height ;
+
+	double mass{} ;
+	std::cout << "mass(kg)>"s ;
+	std::cin >> mass ;
+
+	double bmi = mass / (height * height) ;
+
+	std::cout << "BMI="s << bmi << "\n"s ;
+
+	auto status = []( double bmi )
 	{
-		auto x = 1 ;
-		auto y = 2 ;
+		if ( bmi < 18.5 )
+			return "Underweight.\n"s ;
+		else if ( bmi < 25.0 )
+			return "Normal.\n"s ;
+		else if ( bmi < 30.0 )
+			return "Overweight.\n"s ;
+		else
+			return "Obese.\n"s ;
 		
-		std::cout << x + x << "\n"s ;
-	}
-	// assignment used as truth value
-	{
-		auto x = 0 ;
+	} ;
+	
+	std::cout << status(bmi) ;
 
-		if ( x = 123 )
-			std::cout << "x is 123.\n"s ;
-		else
-			std::cout << "x is NOT 123.\n"s ;
-	}
-	{
-		auto x = 0 ;
+	/*
+	// std::cin splits input by blank and newline
+	// hello world
+	// hello
+	std::string x{} ;
+	std::cin >> x ;
+	std::cout << x ;
+	*/
 
-		bool b1 = x = 1 ;
-		if ( x = 1 ) std::cout << "true assignment\n"s ;
+	/*
+	// hello world
+	// helloworld
+	std::string x{} ;
+	std::string y{} ;
+	std::cin >>  x >> y ;
+	std::cout << x << y ;
+	*/
 
-		bool b0 = x = 0 ;
-		if ( x = 0 ) std::cout << "false assignment\n"s ;
-	}
-	// no warning
-	{
-		auto x = 0 ;
+	/*
+	int i{} ;
+	std::cin >> i ;
+	std::cout << i << "\n"s ;
+	double d{} ;
+	std::cin >> d ;
+	std::cout << d << "\n"s ;
+	*/
 
-		if ( ( x = 0 ) )
-			std::cout << "TRUE!.\n"s ;
-		else
-			std::cout << "FALSE!.\n"s ;
-	}
+	/*
+	bool b{} ;
+
+	//std::cin >> b ;
+	//std::cout << std::boolalpha << b << "\n"s ;
+
+	std::cin >> std::boolalpha >> b ;
+	std::cout << std::boolalpha << b << "\n"s ;
+	*/
 }
