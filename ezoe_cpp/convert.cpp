@@ -4,5 +4,5 @@ int	main()
 	double mass{ } ;
 	
 	std::cin >> height >> mass ;
-	std::cout << mass / (height * height) ;
+	std::cout << height/100.0 << "\n"s << mass ;
 }
