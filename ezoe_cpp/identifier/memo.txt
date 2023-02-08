@@ -1,0 +1,105 @@
+# Identifiers
+## Keywords
+alignas
+alignof
+asm
+auto
+bool
+break
+case
+catch
+char
+char16_t
+char32_t
+class
+concept
+const
+constexpr
+const_cast
+continue
+decltype
+default
+delete
+do
+double
+dynamic_cast
+else
+enum
+explicit
+export
+exter
+false
+float
+for
+friend
+goto
+if
+inline
+int
+long
+mutable
+namespace
+new
+noexport
+nullptr
+operator
+private
+protected
+public
+register
+reinterpret
+requires
+return
+short
+signed
+sizeof
+static
+static_assert
+struct
+switch
+template
+this
+thread_local
+throw
+true
+try
+typedef
+typeid
+typename
+union
+unsigned
+using
+virtual
+void
+volatile
+wchar_t
+while
+
+## Characters available for Identifiers
+- Identifiers can only contain alphanumeric characters and underscore.
+- Identifiers must starts with alphabetic characters or underscore.
+- Identifiers with a double underscore(__) are reserved.
+- Identifiers that begin with an underscore followd by an uppercase letter are reserved.
+- Identifiers that begin with an underscore are reserved in the global namespace.
+
+## Declaration and Definition
+int x ;
+int x = 0 ;
+int x{} ;
+
+int plus_one ( int x ) ;
+int plus_one ( int x ) ;
+int plus_one ( int x ) ;
+int plus_one ( int x )
+{
+	return x + 1 ;
+}
+
+
+## Namespace
+namespace ns {
+	int name{} ;
+}
+ns::name ;
+int f()
+{}
