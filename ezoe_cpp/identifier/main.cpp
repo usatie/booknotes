@@ -1,21 +1,19 @@
+auto f = []()
+{ std::cout << 1 ; } ;
+
 int	main()
 {
-	// Typedef name (Type Alias)
-	{
-		using Number = int ;
-		
-		Number x = 0 ;
-	}
-	// {type_name} {var_name} ;
-	// typedef {type_name} {var_name}
-	{
-		typedef int Number ;
-		
-		Number x = 0 ;
-	}
-	{
-		int typedef Number ;
+	f() ;
 
-		Number x = 0 ;
+	auto f = []()
+	{ std::cout << 2 ; } ;
+
+	f() ;
+	{
+		f() ;
+		auto f = []()
+		{ std::cout << 3 ; } ;
+		f() ;
 	}
+	f() ;
 }
