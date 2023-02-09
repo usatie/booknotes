@@ -1,85 +1,61 @@
+auto output_all = []( auto first, auto last )
+{
+	for ( auto iter = first ; iter != last ; ++iter )
+	{
+		std::cout << *iter << "\n"s ;
+	}
+} ;
+
+auto output_all2 = []( auto first, auto last, auto output_iter )
+{
+	for ( auto iter = first ; iter != last ; ++iter )
+	{
+		*output_iter = *iter ;
+	}
+} ;
+
 int	main()
 {
-	// vector.at()
+	// Vector
 	{
 		std::vector<int> v = {1,2,3,4,5} ;
 
-		int x = v.at( 2 ) ;
-		std::cout << "x: "s << x << "\n"s ;
-		v.at( 2 ) = 0 ;
-		std::cout << "v.at(2): "s << v.at(2) << "\n"s ;
+		output_all( std::begin(v), std::end(v) ) ;
 	}
-	// Dereference Iterator
+	// Standard Input Stream
 	{
-		std::vector<int> v = {1,2,3,4,5} ;
-		auto i = std::begin( v ) ; // iterator
-
-		int x = *i ; // dereference iterator as rvalue
-		*i = 0 ; // dereference iterator as lvalue
+		// last is not initialized, ok?
+		std::istream_iterator<int> first( std::cin ), last ;
+		output_all( first, last ) ;
 	}
-	// Increment/Decrement Reference of Iterator
+	// Directory Iterator
+	/* Unexpectedly got Runtime Error
 	{
-		std::vector<int> v = {1,2,3,4,5} ;
-		auto i = std::begin( v ) ; // iterator
+	    std::filesystem::directory_iterator first("./"), last ;
 
-		std::cout << "Iterate Iterator\n"s ;
-		std::cout << *i << "\n"s ;
-		++i ;
-		std::cout << *i << "\n"s ;
-		++i ;
-		std::cout << *i << "\n"s ;
-		--i ;
-		std::cout << *i << "\n"s ;
-		--i ;
-		std::cout << *i << "\n"s ;
+   		 output_all( first, last ) ;
 	}
-	// Iterate over vector using iterator
-	{
-		std::vector<int> v = {1,2,3,4,5} ;
-		auto iter = std::begin( v ) ;
-
-		std::cout << "Iterate over vector using iterator\n"s ;
-		for ( std::size_t i = 0 ; i != std::size(v) ; ++i, ++iter )
-		{
-			std::cout << *iter << "\n"s ;
-		}
-	}
-	// Compare Iterator
-	{
-		std::vector<int> v = {1,2,3,4,5} ;
-		auto x = std::begin(v) ;
-		auto y = x ;
-
-		bool b1 = ( x == y ) ;
-		bool b2 = ( x != y ) ;
-		++x ;
-		bool b3 = ( x == y ) ;
-		bool b4 = ( x != y ) ;
-		std::cout
-			<< std::boolalpha
-			<< "b1: "s << b1 << "\n"s
-			<< "b2: "s << b2 << "\n"s
-			<< "b3: "s << b3 << "\n"s
-			<< "b4: "s << b4 << "\n"s ;
-	}
-	// vector.end()
-	{
-		std::vector<int> v = { 1,2,3,4,5 } ;
-		auto i = std::end( v ) ; // The next of the last
-
-		*i ; // errorのはずでは・・・？
-		std::cout << *i << "\n"s ;
-		++i ;
-		std::cout << *i << "\n"s ;
-		std::cout << "hello\n"s ;
-	}
-	// Iterate over v using begin and end
+	*/
+	// Output to std::cout
 	{
 		std::vector<int> v = {1,2,3,4,5} ;
 
-		for ( auto iter = std::begin(v), last = std::end(v) ; iter != last ; ++iter )
-		{
-			std::cout << *iter << "\n"s ;
-		}
+		output_all2( std::begin(v), std::end(v),
+					std::ostream_iterator<int>(std::cout) ) ;
+	}
+	// Ouput to Vector ( copy vector )
+	{
+		std::vector<int> source = {1,2,3,4,5} ;
+		std::vector<int> destination(5) ;
+		
+		output_all2( std::begin(source), std::end(source),
+					std::begin(destination) ) ;
+	}
+	// directory iterator ( sample code )
+	{
+		std::filesystem::directory_iterator first("./"), last ;
+
+		for ( auto x = first; x != last; ++x )
+			std::cout << x->path() << std::endl ;
 	}
 }
