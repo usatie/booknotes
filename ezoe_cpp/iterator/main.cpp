@@ -1,61 +1,41 @@
-auto output_all = []( auto first, auto last )
-{
-	for ( auto iter = first ; iter != last ; ++iter )
-	{
-		std::cout << *iter << "\n"s ;
-	}
-} ;
-
-auto output_all2 = []( auto first, auto last, auto output_iter )
-{
-	for ( auto iter = first ; iter != last ; ++iter )
-	{
-		*output_iter = *iter ;
-	}
-} ;
-
 int	main()
 {
-	// Vector
+	// [i, j)
+	// half-closed
 	{
 		std::vector<int> v = {1,2,3,4,5} ;
-
-		output_all( std::begin(v), std::end(v) ) ;
-	}
-	// Standard Input Stream
-	{
-		// last is not initialized, ok?
-		std::istream_iterator<int> first( std::cin ), last ;
-		output_all( first, last ) ;
-	}
-	// Directory Iterator
-	/* Unexpectedly got Runtime Error
-	{
-	    std::filesystem::directory_iterator first("./"), last ;
-
-   		 output_all( first, last ) ;
-	}
-	*/
-	// Output to std::cout
-	{
-		std::vector<int> v = {1,2,3,4,5} ;
-
-		output_all2( std::begin(v), std::end(v),
-					std::ostream_iterator<int>(std::cout) ) ;
-	}
-	// Ouput to Vector ( copy vector )
-	{
-		std::vector<int> source = {1,2,3,4,5} ;
-		std::vector<int> destination(5) ;
 		
-		output_all2( std::begin(source), std::end(source),
-					std::begin(destination) ) ;
+		auto i = std::begin(v) ;
+		auto j = std::end(v) ;
 	}
-	// directory iterator ( sample code )
+	// "Why numbering should start at zero"(EWD831)
+	// by Edsger Wybe Dijkstra
+	//
+	// a) 2 <= i <  6
+	// b) 1 <  i <= 5
+	// c) 2 <= i <= 5
+	// d) 1 <  i <  6
+	//
+	// Iterator is based on a).
+	// In c++, many is based on a).
+	// If b), for loop may looks like this
 	{
-		std::filesystem::directory_iterator first("./"), last ;
+		std::vector<int> v = {1,2,3,4,5} ;
+		auto i = std::begin ( v ) ;
+		auto j = std::end ( v ) ;
 
-		for ( auto x = first; x != last; ++x )
-			std::cout << x->path() << std::endl ;
+		++i ;
+		for ( ; i != j ; ++i )
+			std::cout << *i ;
+		std::cout << *i ;
+	}
+	// If a), for loop may looks like this
+	{
+		std::vector<int> v = {1,2,3,4,5} ;
+		auto i = std::begin ( v ) ;
+		auto j = std::end ( v ) ;
+
+		for ( ; i != j ; ++i )
+			std::cout << *i ;
 	}
 }
