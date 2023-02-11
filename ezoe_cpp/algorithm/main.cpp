@@ -232,4 +232,28 @@ int	main()
 		std::cout << "b: "s << b << "\n"s ;
 		std::cout << "c: "s << c << "\n"s ;
 	}
+	{
+		auto count_if = []( auto first, auto last, auto pred )
+		{
+			auto counter = 0u ;
+			for ( auto i = first; i != last ; ++i )
+			{
+				if ( pred(*i) != false )
+					++counter ;
+			}
+			return counter ;
+		} ;
+		auto count = []( auto first, auto last, auto value )
+		{
+			return std::count_if( first, last,
+				[=]( auto elem ) { return value == elem ; } ) ;
+		} ;
+		std::vector<int> v = {1,2,1,1,3,3} ;
+		auto a = count( std::begin(v), std::end(v), 1 ) ;
+		auto b = count( std::begin(v), std::end(v), 2 ) ;
+		auto c = count( std::begin(v), std::end(v), 3 ) ;
+		std::cout << "a: "s << a << "\n"s ;
+		std::cout << "b: "s << b << "\n"s ;
+		std::cout << "c: "s << c << "\n"s ;
+	}
 }
