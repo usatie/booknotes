@@ -41,8 +41,50 @@ int	main()
 		auto copy = []( auto first, auto last, auto result )
 		{
 			for ( auto iter = first ; iter != last ; ++iter, ++result )
-			{ *result = *iter }
-		}
-		return result ;
+			{ *result = *iter ; }
+			return result ;
+		} ;
+	}
+	// Implement transform
+	{
+		auto transform = []( auto first, auto last, auto result, auto op )
+		{
+			for ( auto iter = first ; iter != last ; ++iter, ++result )
+			{ *result = op(*iter) ; }
+			return result ;
+		} ;
+	}
+	{
+		std::vector<int> a = {1,2,3,4,5} ;
+
+		std::vector<int> b(5) ;
+		std::transform( std::begin(a), std::end(a), std::begin(b),
+			[](auto x){ return 2*x ; } ) ; 
+
+		std::vector<int> c(5) ;
+		std::transform( std::begin(a), std::end(a), std::begin(c),
+			[](auto x){ return x % 3 ; } ) ; 
+
+		std::vector<int> d(5) ;
+		std::transform( std::begin(a), std::end(a), std::begin(d),
+			[](auto x){ return x < 3 ; } ) ; 
+
+		auto print_vec = []( auto v )
+		{
+			std::cout << "[ "s ;
+			for ( auto i = std::begin(v) ; i != std::end(v) ; ++i )
+			{
+				std::cout << *i << ", "s ;
+			}
+			std::cout << "]\n"s ;
+		} ;
+		std::cout << "a: \n"s ;
+		print_vec(a) ;
+		std::cout << "b: \n"s ;
+		print_vec(b) ;
+		std::cout << "c: \n"s ;
+		print_vec(c) ;
+		std::cout << "d: \n"s ;
+		print_vec(d) ;
 	}
 }
