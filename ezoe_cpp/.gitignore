@@ -6,3 +6,4 @@ bmi
 convert
 playground
 *.swp
+*.o

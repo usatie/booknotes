@@ -1,39 +1,75 @@
-template < typename Array >
-struct array_iterator
-{
-	Array & a ;
-	std::size_t i ;
-
-	array_iterator( Array & a, std::size_t i )
-		: a(a), i(i) { }
-} ;
-
-template < typename Array >
-struct array_const_iterator
-{
-	Array const & a ;
-	std::size_t i ;
-
-	array_const_iterator( Array const & a, std::size_t i )
-		: a(a), i(i) { }
-	array_const_iterator( array_iterator<Array> const & iter )
-		: a(iter.a), i(iter.i) { }
-} ;
-
-template < typename T, std::size_t N >
-struct array
-{
-	using iterator = array_iterator<array> ;
-	using const_iterator = array_const_iterator<array> ;
-
-	// Return const_iterator if array is const
-	const_iterator begin() const { return const_iterator(*this, 0) ; }
-	const_iterator end() const { return const_iterator(*this, N) ; }
-	// Always return const_iterator
-	const_iterator cbegin() const { return const_iterator(*this, 0) ; }
-	const_iterator cend() const { return const_iterator(*this, N) ; }
-} ;
+#include "array.hpp"
 
 int main()
 {
+	using Array = const array<int, 5> ;
+	{
+		Array a = {1,2,3,4,5} ;
+
+		auto iter = a.begin() ;
+		std::cout << "postfix\n" ;
+		std::cout << *iter++ << "\n"s ;
+		std::cout << *iter++ << "\n"s ;
+		std::cout << *iter-- << "\n"s ;
+		std::cout << *iter-- << "\n"s ;
+	}
+	{
+		Array a = {1,2,3,4,5} ;
+
+		auto iter = a.begin() ;
+		std::cout << "prefix\n" ;
+		std::cout << *++iter << "\n"s ;
+		std::cout << *++iter << "\n"s ;
+		std::cout << *--iter << "\n"s ;
+		std::cout << *--iter << "\n"s ;
+	}
+	// Now it's available in algorithms!
+	{
+		Array a = {1,2,3,4,5} ;
+
+		std::for_each( std::begin(a), std::end(a),
+			[](auto x) { std::cout << x ; } ) ;
+		std::cout << "\n" ;
+	}
+	// +=, +
+	// -=, -
+	{
+		Array a = {1,2,3,4,5} ;
+
+		auto iter = a.begin() ;
+		std::cout << "+=, +\n" ;
+		std::cout << *(iter+=2) << "\n"s ;
+		std::cout << *iter << "\n"s ;
+		std::cout << *(iter+2) << "\n"s ;
+		std::cout << *iter << "\n"s ;
+		std::cout << "-=, -\n" ;
+		std::cout << *(iter-=2) << "\n"s ;
+		std::cout << *iter << "\n"s ;
+		std::cout << *(iter-2) << "\n"s ;
+		std::cout << *iter << "\n"s ;
+	}
+	// []
+	{
+		Array a = {1,2,3,4,5} ;
+
+		auto iter = a.begin() ;
+		std::cout << "[]\n" ;
+		std::cout << iter[0] << "\n"s ;
+		std::cout << iter[1] << "\n"s ;
+		std::cout << iter[2] << "\n"s ;
+		std::cout << iter[3] << "\n"s ;
+		std::cout << iter[4] << "\n"s ;
+	}
+	// <, <=, >, >=
+	{
+		Array a = {1,2,3,4,5} ;
+
+		auto i = a.begin() ;
+		auto j = i + 1 ;
+		std::cout << "<, <=, >, >=\n" << std::boolalpha ;
+		std::cout << (i <  j) << "\n"s ;
+		std::cout << (i <= j) << "\n"s ;
+		std::cout << (i >  j) << "\n"s ;
+		std::cout << (i >= j) << "\n"s ;
+	}
 }
