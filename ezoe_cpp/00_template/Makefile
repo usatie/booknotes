@@ -1,9 +1,13 @@
 gcc_options = -std=c++17 -Wall --pedantic-errors
 
 run : all
+	./playground
 	./program
 
-all: program
+all: program playground
+
+playground : playground.cpp all.h all.h.gch
+	g++ $(gcc_options) -include all.h $< -o $@
 
 program : main.cpp all.h all.h.gch
 	g++ $(gcc_options) -include all.h $< -o $@
