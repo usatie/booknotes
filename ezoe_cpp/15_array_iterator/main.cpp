@@ -1,29 +1,12 @@
 template < typename Array >
-struct array_iterator_begin
-{
-	Array & a ;
-	array_iterator_begin( Array & a )
-		: a( a ) {}
-	/* Compile Error
-	Array::reference operator *()
-	{
-		return a[0] ;
-	}
-	*/
-	typename Array::reference operator *()
-	{
-		return a[0] ;
-	}
-} ;
-
-template < typename Array >
 struct array_iterator
 {
 	using reference = array_iterator & ;
 	using const_reference = array_iterator const & ;
+	using size_type = typename Array::size_type ;
 	Array & a ;
-	typename Array::size_type i ;
-	array_iterator( Array & a, typename Array::size_type i )
+	size_type i ;
+	array_iterator( Array & a, size_type i )
 		: a( a ), i(i) {}
 	/* Compile Error
 	Array::reference operator *()
@@ -33,23 +16,54 @@ struct array_iterator
 	*/
 	// *
 	typename Array::reference operator *() ;
+	typename Array::reference operator [] ( size_type n ) const ;
 	// ++/-- prefix
-	array_iterator & operator ++() ;
-	array_iterator & operator --() ;
+	reference operator ++() ;
+	reference operator --() ;
 	// ++/-- postfix
 	array_iterator operator ++(int) ;
 	array_iterator operator --(int) ;
 	// ==/!=
 	bool operator ==( const_reference right ) ;
 	bool operator !=( const_reference right ) ;
+	// +=/+
+	reference operator +=( size_type n ) ;
+	array_iterator operator +( size_type n ) const ;
+	// -=/-
+	reference operator -=( size_type n ) ;
+	array_iterator operator -( size_type n ) const ;
+	// </<=/>/>=
+	bool operator <( const_reference right ) ;
+	bool operator <=( const_reference right ) ;
+	bool operator >( const_reference right ) ;
+	bool operator >=( const_reference right ) ;
 } ;
 
+template < typename Array >
+array_iterator<Array> array_iterator<Array>::operator -( size_type n ) const
+{
+	auto copy = *this ;
+	copy -= n ;
+	return copy ;
+}
+
+// *, []
 template < typename Array >
 typename Array::reference array_iterator<Array>::operator *()
 {
 	return a[i] ;
 }
 
+template < typename Array >
+typename Array::reference array_iterator<Array>::operator []( size_type n ) const
+{
+	// This is better than 
+	// return a[i+n] ;
+	// if (operator *) or (operator +) are more complicated.
+	return *( *this + n ) ;
+}
+
+// ++, --, ++, --
 template < typename Array >
 typename array_iterator<Array>::reference array_iterator<Array>::operator ++()
 {
@@ -79,17 +93,67 @@ array_iterator<Array> array_iterator<Array>::operator --(int)
 	--*this ;
 	return copy ;
 }
+
+// ==, !=
 template < typename Array >
-bool array_iterator<Array>::operator ==( typename array_iterator<Array>::const_reference right )
+bool array_iterator<Array>::operator ==( const_reference right )
 {
 	return i == right.i ;
 
 }
 
 template < typename Array >
-bool array_iterator<Array>::operator !=( typename array_iterator<Array>::const_reference right )
+bool array_iterator<Array>::operator !=( const_reference right )
 {
 	return i != right.i ;
+}
+
+// <, <=, >, >=
+template < typename Array >
+bool array_iterator<Array>::operator <( const_reference right )
+{
+	return i < right.i ;
+}
+
+template < typename Array >
+bool array_iterator<Array>::operator <=( const_reference right )
+{
+	return i <= right.i ;
+}
+
+template < typename Array >
+bool array_iterator<Array>::operator >( const_reference right )
+{
+	return i > right.i ;
+}
+
+template < typename Array >
+bool array_iterator<Array>::operator >=( const_reference right )
+{
+	return i >= right.i ;
+}
+
+// +=, +, -=, -
+template < typename Array >
+typename array_iterator<Array>::reference array_iterator<Array>::operator +=( size_type n ) 
+{
+	i += n ;
+	return *this ;
+}
+
+template < typename Array >
+array_iterator<Array> array_iterator<Array>::operator +( size_type n ) const
+{
+	auto copy = *this ;
+	copy += n ;
+	return copy ;
+}
+
+template < typename Array >
+typename array_iterator<Array>::reference array_iterator<Array>::operator -=( size_type n ) 
+{
+	i -= n ;
+	return *this ;
 }
 
 template < typename T, std::size_t N >
@@ -205,5 +269,46 @@ int	main()
 		std::for_each( std::begin(a), std::end(a),
 			[](auto x) { std::cout << x ; } ) ;
 		std::cout << "\n" ;
+	}
+	// +=, +
+	// -=, -
+	{
+		array<int, 5> a = {1,2,3,4,5} ;
+
+		auto iter = a.begin() ;
+		std::cout << "+=, +\n" ;
+		std::cout << *(iter+=2) << "\n"s ;
+		std::cout << *iter << "\n"s ;
+		std::cout << *(iter+2) << "\n"s ;
+		std::cout << *iter << "\n"s ;
+		std::cout << "-=, -\n" ;
+		std::cout << *(iter-=2) << "\n"s ;
+		std::cout << *iter << "\n"s ;
+		std::cout << *(iter-2) << "\n"s ;
+		std::cout << *iter << "\n"s ;
+	}
+	// []
+	{
+		array<int, 5> a = {1,2,3,4,5} ;
+
+		auto iter = a.begin() ;
+		std::cout << "[]\n" ;
+		std::cout << iter[0] << "\n"s ;
+		std::cout << iter[1] << "\n"s ;
+		std::cout << iter[2] << "\n"s ;
+		std::cout << iter[3] << "\n"s ;
+		std::cout << iter[4] << "\n"s ;
+	}
+	// <, <=, >, >=
+	{
+		array<int, 5> a = {1,2,3,4,5} ;
+
+		auto i = a.begin() ;
+		auto j = i + 1 ;
+		std::cout << "<, <=, >, >=\n" << std::boolalpha ;
+		std::cout << (i <  j) << "\n"s ;
+		std::cout << (i <= j) << "\n"s ;
+		std::cout << (i >  j) << "\n"s ;
+		std::cout << (i >= j) << "\n"s ;
 	}
 }
