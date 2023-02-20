@@ -112,4 +112,59 @@ int	main()
 		}
 		std::cout << "resumed.\n" ;
 	}
+	// Stack Unwinding
+	{
+		auto f = []() {
+			try { throw 0 ; }
+			catch ( double e ) { std::cout << "not here.\n" ; }
+			std::cout << "This is not printed\n"s ;
+		} ;
+		try {
+			try {
+				f() ;
+			} catch ( std::string & e ) { std::cout << "not here.\n" ; }
+			std::cout << "This is not printed\n"s ;
+		} catch ( int e ) { std::cout << "caught here.\n" ; }
+	}
+	// Destructor can be called during stack unwinding
+	{
+		struct Object {
+			std::string name ;
+			Object( std::string const & name ) : name(name)
+			{ std::cout << name << " is constructed.\n"s ; }
+			~Object()
+			{ std::cout << name << " is destructed.\n"s ; }
+		} ;
+		Object obj("obj"s) ;
+
+		auto f = []() { 
+			Object obj("f"s) ;
+			throw 123 ;
+		} ;
+		auto g = [&]() {
+			Object obj("g"s) ;
+			f() ;
+		} ;
+		auto h = [&]() {
+			Object obj("h"s) ;
+			g() ;
+		} ;
+		try {
+			h() ;
+		} catch ( int e ) {
+			std::cout << "caught.\n"s ;
+		}
+	}
+	// std::scope_exit from C++20
+	/*
+	{
+		auto f = []() { 
+			// maybe typo after new?
+			auto ptr = new ;
+			// maybe typo missing ()?
+			std::scope_exit e( [&]{ delete ptr ; } ) ;
+
+		} ;
+	}
+	*/
 }
