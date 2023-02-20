@@ -1,5 +1,8 @@
 int	main()
 {
+	/*---------------------------------------------
+	 * Common between pointer and reference
+	  --------------------------------------------- */
 	// reference
 	{
 		int object = 0 ;
@@ -41,5 +44,60 @@ int	main()
 		read = *p ;    // pointer needs operator * to dereference
 
 		ptr_type p2 = p ; // pointer with no operator is pointer, not dereferenced value
+	}
+	/*---------------------------------------------
+	 * Difference between pointer and reference
+	  --------------------------------------------- */
+	// assignment
+	{
+		int x { } ;
+		int y { } ;
+
+		int & reference = x ;
+		reference = y ; // doesn't change the reference target
+
+		int * pointer = &x ;
+		pointer = &y ; // change the reference target to y
+	}
+	/*
+	// NULL pointer
+	{
+		// Compile error
+		//int & reference ; // reference must be initialized
+
+		int * pointer ; // this is ok, but the pointer value is undefined
+		std::cout << *pointer ; // this is undefined
+		*pointer = 123 ; // this is undefined
+	}
+	*/
+	// nullptr
+	{
+		int * pointer = nullptr ;
+		double * p1 = nullptr ;
+		std::string * p2 = nullptr ;
+
+		int * p3 = NULL ; // NULL is treated as null pointer
+		int * p4 = 0 ; // 0 is treated as null pointer
+		// However, null pointer is not guaranteed to be 0.
+	}
+	// Invalid reference happens with pointer
+	{
+		auto f = []() -> int * {
+			int variable {} ;
+			return &variable ;
+		} ;
+
+		int * ptr = f() ;
+		int read = *ptr ; // This dereference is invalid
+	}
+	// Invalid reference can happen with reference
+	{
+		auto f = []() -> int & {
+			int variable {} ;
+			return variable ;
+		} ;
+
+		int & ref = f() ;
+		int read = ref ; // This dereference is invalid
 	}
 }
