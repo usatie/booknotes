@@ -38,15 +38,78 @@ int	main()
 	}
 	// Throw an error
 	{
-		while (1)
-		{
-			std::cout << "Enter Index between 0 to 4. >"s ;
+		std::cout << "Enter Index between 0 to 4. >"s ;
 
-			int i {} ;
-			std::cin >> i ;
-			
-			array<int, 5> a = {1,2,3,4,5} ;
-			a.at(i) ;
+		int i {} ;
+		std::cin >> i ;
+		
+		array<int, 5> a = {1,2,3,4,5} ;
+		a.at(i) ;
+	}
+	// Catch an error
+	{
+		/*
+		try {
+			// throwable code
+		} catch ( type name ) {
+			// error handling
 		}
+		*/
+		try {
+			throw 123 ;
+		} catch ( int e ) {
+			std::cout << e ;
+		}
+		std::cout << "resumed.\n" ;
+	}
+	// Can't catch when type doesn't match
+	/*
+	{
+		try {
+			throw 3.14 ; // double
+		} catch ( int e ) {
+			std::cout << e ;
+		}
+		std::cout << "You won't read this.\n" ;
+	}
+	*/
+	// Multiple catch
+	{
+		try {
+			throw "error"s ; // std::string
+		} catch ( int e ) {
+			std::cout << e ;
+		} catch ( double e ) {
+			std::cout << e ;
+		} catch ( std::string e ) {
+			std::cout << e ;
+		}
+		std::cout << "resumed.\n" ;
+	}
+	// Nested error can be caught
+	{
+		auto f = []() { throw 123 ; } ;
+		auto g = [&]() { f() ; } ;
+		auto h = [&]() { g() ; } ;
+		try {
+			h() ;
+		} catch ( int e ) {
+			std::cout << e ;
+		}
+		std::cout << "resumed.\n" ;
+	}
+	// catch an error from std::array
+	{
+		std::array<int, 1> a = {0} ;
+		
+		try {
+			a.at(1000) ;
+			// typo : a[1000] ;
+		}
+		catch( std::out_of_range & e )
+		{
+			std::cout << e.what() << "\n"s ;
+		}
+		std::cout << "resumed.\n" ;
 	}
 }
