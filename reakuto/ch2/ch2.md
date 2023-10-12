@@ -45,6 +45,36 @@
 
 ## 2.3.3 Object Types
 
+# 2.4 Define Functions
+## 2.4.1 Function Declaration and Function Expression
+- Statement(instruction) vs Expression(value)
+```
+// Statement cannot be assigned to a variable
+const a = if (true) { 1 } else { 2 } // error
+// Expression can be assigned to a variable
+const a = true ? 1 : 2 // ok
+```
+- In Functional Programming, most of syntax are expressions
+- Declare Statement has the same problem as `var`
+  1. Hoisting
+  2. Redeclare
+- functions are First-Class Object.
+- a function is an instance of embedded `Function` Object.
+- assignable, passable, returnable
+- In other words, "First-Class Function"
+- Function expression is a literal to generate a `Function` object
+- A function which is a property of an object is called "Method"
 
+## 2.4.2 Arrow function expression and Anonymous function
+- Anonymous functions dissapear right after they are defined unless they are assigned
+- Arrow functions are not the same as `function` keyword functions
+- 3 ways of defining functions
+1. Function Staetment
+2. Function Expression
+3. Arrow Expression
+- In React, arrow functions are favaorable
 
-
+## 2.4.3 Various expression of parameters
+- Default parameters
+- Rest parameters (variadic function)
+- Spread syntax
