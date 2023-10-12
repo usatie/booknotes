@@ -1,0 +1,10 @@
+console.log([1,2,3].__proto__);
+console.log({ foo: 'bar' }.__proto__);
+console.log((function(){}).__proto__);
+console.log('JavaScript'.__proto__);
+console.log((65536).__proto__);
+console.log((true).__proto__);
+console.log(typeof Array);
+console.log(Array.prototype);
+console.log(typeof String);
+console.log(String.prototype);

@@ -78,3 +78,24 @@ const a = true ? 1 : 2 // ok
 - Default parameters
 - Rest parameters (variadic function)
 - Spread syntax
+
+# 2.5 Class
+## 2.5.1 Class syntax
+- Private fields (`#fieldName`)
+- Public fields (`fieldName`)
+- Constructor can't be written as an arrow function
+- `new` to create an instance
+- `extends` to inherit a class
+- Class is a constructor function
+- Constructor function is inheritant of `Prototype Object`
+- "JavaScript におけるコンストラクタ関数というのは、プロトタイプオブジェクトを継承してオ ブジェクトインスタンスを生成するための独立した関数のこと"
+
+## 2.5.2 Prototype base Object Oriented Programming
+https://developer.mozilla.org/en-US/docs/Glossary/Prototype-based_programming
+- Class base vs Prototype base
+- The output is different from the book
+`console.log('JavaScript'.__proto__)`
+// `[String: '']` : Text Book
+// `{}` : My environment
+- `Array` is constructor function
+- `String` is constructor function
