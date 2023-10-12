@@ -8,3 +8,11 @@ $ asdf plugin add nodejs
 $ asdf install nodejs latest
 $ asdf global nodejs latest
 ```
+# 1-2. Create a project with Vite
+```
+$ yarn create vite hello-world --template=react-ts
+$ cd hello-world
+$ yarn
+$ yarn dev
+$ yarn dev - --port 3001
+```
