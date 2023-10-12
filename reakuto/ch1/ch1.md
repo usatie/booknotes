@@ -16,3 +16,17 @@ $ yarn
 $ yarn dev
 $ yarn dev - --port 3001
 ```
+
+# 1-3. Various Commands and Scripts to manage projects
+```
+$ yarn [run] <script-name>
+$ yarn dev
+$ yarn run dev
+$ yarn run vite
+$ ./node_modules/.bin/vite
+
+$ yarn add [-D|--dev] <package-name>
+$ yarn add prettier -D
+$ yarn run prettier ./src/**/*.{ts,tsx}
+$ yarn format
+```
