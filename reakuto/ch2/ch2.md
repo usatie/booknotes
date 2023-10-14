@@ -135,3 +135,60 @@ https://developer.mozilla.org/en-US/docs/Glossary/Prototype-based_programming
 - `??` behaves similarly to `||`
     - But only when `null` and `undefined`, it returns the right operand
     - '', 0 and other falsy values are not nullish
+
+# 2.8 this
+## 2.8.1 What is `this` in JavaScript?
+- `this` is a reference to the object of the current execution context
+    - there is an exception
+- `global` in Node.js
+- `window` in browser
+
+## 2.8.2 Four patterns of `this`
+### (1) new operator: newly created object
+### (2) executed as a method of an object: the object itself (method-this.js)
+### (3) Other than the above [non strict mode]: global object (global-this.js)
+- Global object is passed as `this` to the function
+### (4) Other than the above [strict mode]: undefined (strict-this.js)
+- Global object can be easily contaminated
+```
+function Person(name) {
+	this.name = name;
+	return this;
+}
+
+Person('somebody'); // Person { name: 'somebody' }
+this.name
+name
+```
+- To avoid this, use strict mode.
+- In strict mode, undefined is passed as `this`
+```
+function Person(name) {
+    'use strict';
+	this.name = name;
+	return this;
+}
+
+Person('somebody'); // Person { name: 'somebody' }
+this.name
+name
+```
+- class syntax is automatically strict mode
+```
+class Foo { constructor() { console.log('`this` is', this); } }
+Foo();
+new Foo();
+```
+- globalThis is a new feature of ES2020
+```
+class Foo { constructor() { 'use strict'; console.log(this); console.log('`this` is', this); } }
+Foo();
+new Foo();
+```
+
+## 2.8.3 The problems of `this` and the solutions
+- Arrow function binds `this` in the context when it is declared
+- However, `call()` and `bind()` can't change `this` of arrow function
+https://stackblitz.com/edit/react-6tvyxi?file=src%2FApp.js
+- Only use `this` in class syntax
+- In class, other than constructor, use arrow function for methods and internal functions
