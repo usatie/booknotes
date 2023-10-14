@@ -99,3 +99,25 @@ https://developer.mozilla.org/en-US/docs/Glossary/Prototype-based_programming
 // `{}` : My environment
 - `Array` is constructor function
 - `String` is constructor function
+
+# 2.6 Convenient syntax for Array and Object
+## 2.6.1 Destructuring Assignment and Spread syntax
+- Keys of an object
+    - Symbol (`key`)
+    - Quoted String (`'key'`)
+    - Computed Property Name (`[key]`)
+- Shorthand property assignment
+- Destructuring assignment
+- Spread syntax
+
+## 2.6.2 Object merge and copy
+- Object.assign is destructive
+- Spread syntax is non-destructive
+- Spread syntax is shallow copy
+    - To copy deeply, it is necessary to copy recursively
+1. `JSON.parse(JSON.stringify(obj))`
+    - Date object is not copied
+    - Function is not copied
+    - undefined is not copied
+2. Lodash's `cloneDeep(obj)`
+3. rfdc (recursive fast deep clone)
