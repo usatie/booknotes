@@ -121,3 +121,17 @@ https://developer.mozilla.org/en-US/docs/Glossary/Prototype-based_programming
     - undefined is not copied
 2. Lodash's `cloneDeep(obj)`
 3. rfdc (recursive fast deep clone)
+
+# 2.7 Operators and Expressions for shorter code
+## 2.7.1. Short circuit evaluation
+- `&&`
+- `||`
+- `!`
+- There are times when you want to `if` as EXPRESSION not statement
+
+## 2.7.2 Nullish coalescing and Optional chaining
+- `??`
+- `?.`
+- `??` behaves similarly to `||`
+    - But only when `null` and `undefined`, it returns the right operand
+    - '', 0 and other falsy values are not nullish
