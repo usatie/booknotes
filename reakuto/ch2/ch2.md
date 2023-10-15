@@ -192,3 +192,28 @@ new Foo();
 https://stackblitz.com/edit/react-6tvyxi?file=src%2FApp.js
 - Only use `this` in class syntax
 - In class, other than constructor, use arrow function for methods and internal functions
+
+# 2.9 Modules
+## 2.9.1 Three kingdoms of JavaScript Module 
+- Before Modules, `<script src="...">` was used.
+    - Everything was global
+- CommonJS
+    - 'require' and 'module.exports'
+    - Node.js
+    - Browserify ( to use CommonJS in browser )
+    - Problem was that CommonJS's synchronous loading was not suitable for browser
+- AMD (Asynchronous Module Definition)
+    - RequireJS ( to use AMD in browser )
+    - Problem was that the syntax was too complicated
+- ES Modules
+    - `<script type="module">` is used to load ES Modules
+        - `import` and `export`
+        - Always strict mode
+        - top level variables are not global, module local variables
+    - Syntax(`import` and `export`) are intuitive
+    - static analysis
+    - synchronous and asynchronous loading
+## 2.9.2 ES Modules `import` and `export`
+```package.json
+  "type": "module",
+```
