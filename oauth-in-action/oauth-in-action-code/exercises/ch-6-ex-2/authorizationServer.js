@@ -212,7 +212,18 @@ app.post("/token", function(req, res){
 	/*
 	 * Implement the client credentials grant type
 	 */
-	
+	} else if (req.body.grant_type == 'client_credentials') {
+		var rscope = req.body.scope ? req.body.scope.split(' ') : undefined;
+		var cscope = client.scope ? client.scope.split(' ') : undefined;
+		if (__.difference(rscope, cscope).length > 0) {
+			res.status(400).json({error: 'invalid_scope'});
+			return;
+		}
+		var access_token = randomstring.generate();
+		var token_response = { access_token: access_token, token_type: 'Bearer',  scope: rscope.join(' ') };
+		nosql.insert({ access_token: access_token, client_id: clientId, scope: rscope });
+		res.status(200).json(token_response);
+		return;
 	} else if (req.body.grant_type == 'refresh_token') {
 	nosql.one().make(function(builder) {
 	  builder.where('refresh_token', req.body.refresh_token);
