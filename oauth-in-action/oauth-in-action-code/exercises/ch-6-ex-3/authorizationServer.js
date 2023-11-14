@@ -247,6 +247,31 @@ app.post("/token", function(req, res){
 	/*
 	 * Implement the resource owner credentials grant type
 	 */
+	} else if (req.body.grant_type == 'password') {
+		var username = req.body.username;
+		var user = getUser(username);
+		if (!user) {
+			res.status(401).json({error: 'invalid_grant'});
+			return;
+		}
+		var password = req.body.password;
+		if (user.password != password) {
+			res.status(401).json({error: 'invalid_grant'});
+			return;
+		}
+		var rscope = req.body.scope ? req.body.scope.split(' ') : undefined;
+		var cscope = client.scope ? client.scope.split(' ') : undefined;
+		if (__.difference(rscope, cscope).length > 0) {
+			res.status(401).json({error: 'invalid_scope'});
+			return;
+		}
+		var access_token = randomstring.generate();
+		var refresh_token = randomstring.generate();
+		nosql.insert({ access_token: access_token, client_id: clientId, scope: rscope });
+		nosql.insert({ refresh_token: refresh_token, client_id: clientId, scope: rscope });
+		var token_response = { access_token: access_token, token_type: 'Bearer',  refresh_token: refresh_token, scope: rscope.join(' ') };
+		res.status(200).json(token_response);
+		return;
 	
 	} else if (req.body.grant_type == 'refresh_token') {
 	nosql.one().make(function(builder) {
