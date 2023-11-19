@@ -1,0 +1,35 @@
+/* CSS Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* header style is inherited in h1 in header */
+header {
+    width: 80%;
+}
+
+body {
+    min-height: 100vh; /* vh is relative to viewport height */
+}
+
+h1 {
+    border: 2px dashed red;
+    width: 50%;
+    font-size: 3rem; /* rem is relative to root font-size */
+    padding: 0.5em; /* em is relative to current font-size */
+}
+
+main {
+    width: 50vw; /* vw is relative to viewport width */
+                /* % is better choice */
+    background-color: skyblue;
+    font-size: 2rem;
+}
+
+p {
+    font-size: 16px; /* default for medium chrome setting */
+    font-size: 2rem; /* default root em */
+    width: 40ch; /* ch is relative to width of the glyph "0" */
+}
