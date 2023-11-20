@@ -1,5 +1,6 @@
 # CSS Full Course for Beginners | Complete All-in-One Tutorial | 11 Hours
 by Dave Gray
+https://github.com/gitdagray/css_course
 https://www.youtube.com/watch?v=n4R2E7O-Ngo
 
 (0:00:00) Intro
