@@ -26,5 +26,9 @@
 - Relax all edges in order of distance from the source.
 - Use a priority queue to find the next edge to relax.
 ## 14.7 全点対間最短路問題：フロイド・ワーシャル法
+- Directed (Cyclic) Graph
+- dp[k][i][j]: shortest path from i to j using vertices 0,1,...,k-1
+- dp[k+1][i][j] = min(dp[k][i][j], dp[k][i][k] + dp[k][k][j])
+
 ## 14.8 参考：ポテンシャルと差分制約系
 ## 14.9 まとめ
