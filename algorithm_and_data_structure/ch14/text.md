@@ -15,6 +15,16 @@
 - At most |V|-1 relaxations are needed.
 - If |V| relaxations are done, there is a negative cycle.
 ## 14.6 単一始点最短路問題：ダイクストラ法
+- Directed (Cyclic) Graph with non-negative weights
+- S: set of vertices for which the shortest path is known
+
+- 1. Find the vertex u not in S with the smallest distance from s.
+- 2. Add u to S. (This is proved to be the shortest path.)
+- 3. Relax all edges from u.
+- 4. Repeat
+
+- Relax all edges in order of distance from the source.
+- Use a priority queue to find the next edge to relax.
 ## 14.7 全点対間最短路問題：フロイド・ワーシャル法
 ## 14.8 参考：ポテンシャルと差分制約系
 ## 14.9 まとめ
