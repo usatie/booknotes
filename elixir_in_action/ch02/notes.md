@@ -1,4 +1,10 @@
 # 2.4 Understanding the type system
+## 2.4.3 Tuples
+- `person = {"Bob", 25}`
+- `elem(person, 1)`
+- `put_elem(person, 1, 27`
+- `put_elem` returns new version
+
 ## 2.4.2 Atoms
 - literally named constatns
 - enumerations in C/C++
