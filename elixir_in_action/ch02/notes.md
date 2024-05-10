@@ -1,4 +1,26 @@
 # 2.4 Understanding the type system
+## 2.4.4 Lists
+- Singly linked lists
+- `prime_numbers = [2, 3, 5, 7]`
+- `length(prime_numbers)`
+- `Enum.at(prime_numbers, 3)`
+- `5 in prime_numbers`
+- `4 in prime_numbers`
+- List.replace_at(prime_numbers, 1, 11)
+- List.insert_at(prime_numbers, 0, 11)
+- List.insert_at(prime_numbers, -1, 11)
+- List.insert_at(prime_numbers, 10000, 11)
+- [1,2,3] ++ [4,5]
+- it really looks like Lisp's cons cells
+- hd([1,2,3,4])
+- tl([1,2,3,4])
+
+```
+a_list = [head | tail]
+```
+https://hexdocs.pm/elixir/List.html
+https://hexdocs.pm/elixir/Enum.html
+
 ## 2.4.3 Tuples
 - `person = {"Bob", 25}`
 - `elem(person, 1)`
