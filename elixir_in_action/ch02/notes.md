@@ -1,4 +1,15 @@
 # 2.4 Understanding the type system
+## 2.4.6 Maps
+- `%{}`
+- `squares = %{ 1=>2, 2=>4, 3=>9}`
+- `squares = Map.new([{1, 1}, {2, 4}, {3, 9}])`
+- `squares[2]`
+- `squares[4]`
+- `Map.get(squares, 2)`
+- `Map.fetch(squares, 4)`
+- `Map.fetch!(squares, 4)`
+- `Map.put(squares, 4)`
+
 ## 2.4.4 Lists
 - Singly linked lists
 - `prime_numbers = [2, 3, 5, 7]`
