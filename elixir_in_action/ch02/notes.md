@@ -10,6 +10,26 @@
 - `Map.fetch!(squares, 4)`
 - `Map.put(squares, 4)`
 
+## 2.4.5 Immutability
+### Benefits
+- side-effect-free functions
+  1. easier to analyze
+  2. easier to understand
+  3. easier to test
+- data consistency (atomic operations)
+- Q. Do I need something like ` || original_data`?
+- A. `try/rescue` or `case` is recommended.
+```
+# Does this return original_data on error?
+
+def complex_transformation(original_data) do
+  original_data
+  |> transformation_1(...)
+  |> transformation_2(...)
+  ...
+end
+```
+
 ## 2.4.4 Lists
 - Singly linked lists
 - `prime_numbers = [2, 3, 5, 7]`
