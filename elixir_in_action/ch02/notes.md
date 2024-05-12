@@ -1,3 +1,58 @@
+# 2.7 Understanding the runtime
+## 2.7.1 Modules and functions in the runtime
+### Module Names and Atoms
+- `defmodule Geometry do ... end`
+- `Geometry` is an alias that corresponds to `:Elixir.Geometry`
+- module names are aliases, aliases are atoms!
+- The first time you call the function of a module, BEAM tries to find the corresopnding file on the disk
+- in-memory compilation
+
+### Pure Erlang Modules
+- `:code.get_path`
+- At run time, module names are atoms
+```
+> Circle.area(10)
+> :"Elixir.Circle".area(10)
+> Elixir.Circle.area(10)
+```
+
+### Dynamically calling functions
+- `apply(IO, :puts, ["Dynamic function call."])`
+- Kernel.apply/3
+- MFA(Module, Function, Arguments)
+
+## 2.7.2 Starting the runtime
+### Interactive Shell
+- input is interpreted (non byte code, not performant)
+- modules are always compiled (byte code!)
+
+### Running scripts
+1. The BEAM instance is started.
+2. The file is compiled in-memory, and the resulting modules are loaded to the VM.
+3. Whatever code resides outside of a module is interpreted
+4. Once everything is finished, BEAM is stopped.
+```
+echo 'IO.puts("Hello world") > my_source.ex
+elixir my_source.ex
+```
+- `.exs` extension is recommended
+```
+defmodule MyModule do
+  def run do
+    IO.puts("Called MyModule.run")
+  end
+end
+MyModule.run
+```
+### The mix tool
+```
+mix new my_project
+cd my_project
+mix compile
+mix run -e "IO.puts(MyProject.hello())"
+mix test
+```
+
 # 2.6 Macros
 - macros are compile-time code transformers
 https://hexdocs.pm/elixir/quote-and-unquote.html
