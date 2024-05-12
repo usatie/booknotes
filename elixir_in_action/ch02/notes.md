@@ -1,3 +1,14 @@
+# 2.6 Macros
+- macros are compile-time code transformers
+https://hexdocs.pm/elixir/quote-and-unquote.html
+
+### Special forms
+- capture syntax `&(...)`
+- `for` comprehension `for`
+- `receive` expression
+- `try` blocks
+https://hexdocs.pm/elixir/Kernel.SpecialForms.html
+
 # 2.5 Operators
 https://hexdocs.pm/elixir/operators.html
 - `+`, `-`, `*`, `/`
