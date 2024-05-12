@@ -1,3 +1,36 @@
+# 2.5 Operators
+https://hexdocs.pm/elixir/operators.html
+- `+`, `-`, `*`, `/`
+- `===`, `!==` for strict equality/inequality
+- `==, `!-` for strict equality/inequality
+- `<`, `>`, `<=`, `>=`
+- `and`, `or`, `not`
+- `||`, `&&`
+- `!`
+## Q. What is the difference between strict and weak equality?
+- Relevant only when comparing floats and integers
+```
+iex(10)> 1 == 1.0
+true
+iex(11)> 1 == 1.1
+false
+iex(12)> 1 == 1.000000000000001
+false
+iex(13)> 1 == 1.0000000000000001
+true
+```
+## Operator override
+```
+defmodule WrongMath do
+def a +++ b, do: max(a, b)
+def a + b, do: a - b
+end
+> import WrongMath
+> import Kernel, except: [+: 2]
+> 20 + 2
+18
+```
+
 # 2.4 Understanding the type system
 ## 2.4.12 IO lists
 - integer in the range of 0 to 255
