@@ -1,4 +1,39 @@
 # 2.4 Understanding the type system
+## 2.4.11 Higher-level types
+### Range
+- `1..3`
+- `1 in 1..3`
+- `range = 1..3`
+- `Enum.each(1..3, &IO.puts/1)` : 1,2,3
+- `Enum.each(1..-3, &IO.puts/1)` : 1,0,-1,-2,-3
+- `Enum.each(1..12//3, &IO.puts/1)` : 1,4,7,10
+### Keyword Lists
+- List of pairs, whose each first element is atom
+- `[]` access operator can be used, just like Maps
+- `def my_func(arg1, arg2, opts \\ []) do end`
+- `my_func(x, y)`
+- `my_func(x, y, [width: 1, height: 2])`
+- `my_func(x, y, width: 1, height: 2)`
+```
+days = [{:monday, 1}, {:tuesday, 2}, {:wednesday, 3}]
+days = [monday: 1, tuesday: 2, wednesday: 3]
+```
+### MapSet
+- A store of unique values
+```
+days = MapSet.new([:monday, :tuesday, :wednesday])
+MapSet.member?(days, :monday)
+MapSet.member?(days, :noday)
+days = MapSet.put(days, :thursday)
+# Enumerable
+Enum.each(days, &IO.puts/1)
+```
+### Times and Dates
+- Date          : ~D[2023-01-31]
+- Time          : ~T[11:59:12.000007]
+- NaiveDateTime : ~N[2023-01-31 11:59:12.000007]
+- Datetime      : ~U[2023-01-31 11:59:12.000007Z]
+
 ## 2.4.10 Other built-in types
 - reference : `Kernel.make_ref()`
 - process identifier(PID)
