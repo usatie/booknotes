@@ -1,4 +1,11 @@
 # 2.4 Understanding the type system
+## 2.4.10 Other built-in types
+- reference : `Kernel.make_ref()`
+- process identifier(PID)
+- port identifier
+  - File I/O
+  - communication with external programs
+
 ## 2.4.9 First-class functions
 ```
 square = fn x ->
