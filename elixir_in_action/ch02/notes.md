@@ -1,4 +1,30 @@
 # 2.4 Understanding the type system
+## 2.4.9 First-class functions
+```
+square = fn x ->
+  x * x
+end
+```
+- `square = fn x -> x * x end`
+- `square.(5)`
+- `print_element = fn x -> IO.puts(x) end`
+- `print_element = &IO.puts/1`
+- `Enum.each([1,2,3], print_element)`
+- `Enum.each([1,2,3], fn x -> IO.puts(x) end)`
+### lambdas
+- `lambda = fn x,y,z -> x * y + z end`
+- `lambda = &(&1 * &2 + &3)`
+- `* &some_code(&1, ...)` expression must at least contain one argument as &1
+### Closures
+- The original location for 5 is not garbage-collected because the closure is capturing ti
+```
+outside_var = 5
+my_lambda = fn -> IO.puts(outside_var) end
+my_lambda.()
+outside_var = 6
+my_lambda.()
+```
+
 ## 2.4.8 Strings
 ### Binary strings
 - `"hello world"`
