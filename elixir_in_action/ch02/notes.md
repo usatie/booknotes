@@ -1,4 +1,30 @@
 # 2.4 Understanding the type system
+## 2.4.12 IO lists
+- integer in the range of 0 to 255
+- a binary
+- an IO list
+```
+iex(10)> iolist = []
+[]
+iex(11)> iolist = [iolist, "This"]
+[[], "This"]
+iex(12)> iolist = [iolist, " is"]
+[[[], "This"], " is"]
+iex(13)> iolist = [iolist, " an"]
+[[[[], "This"], " is"], " an"]
+iex(14)> iolist = [iolist, " IO list."]
+[[[[[], "This"], " is"], " an"], " IO list."]
+iex(15)> IO.puts(iolist)
+This is an IO list.
+:ok
+iex(16)> List.flatten(iolist)
+["This", " is", " an", " IO list."]
+```
+```
+> IO.puts([72, [<<101, 108, 108>>, "o", [~s( )]], [~c"worl"], 'd'])
+Hello world
+:ok
+```
 ## 2.4.11 Higher-level types
 ### Range
 - `1..3`
