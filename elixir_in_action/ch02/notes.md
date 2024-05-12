@@ -1,4 +1,32 @@
 # 2.4 Understanding the type system
+## 2.4.8 Strings
+### Binary strings
+- `"hello world"`
+- `"hello #{3 + 0.14} \n\r\tworld"`
+- sigils : `~s(hello world \r\n\t #{3 + 0.14})`
+- sigils(ignore interpolation) : `~S(hello world \r\n\t #{3 + 0.14})`
+- heredoc
+```
+"""
+
+hello
+world
+#{3+0.14}
+\n\n\n
+"""
+```
+- concatenation : `"hello" <> " " <> "world"`
+- `"ABC"`
+- `"ABC"`
+- `String.to_charlist("ABC")`
+
+### Character Lists
+- `'ABC'`
+- `~c"ABC"`
+- `[65, 66, 67]`
+- `[0x41, 0x42, 0x43]`
+- `List.to_string(~c"ABC")`
+
 ## 2.4.7 Binaries and bitstrings
 - `<<1,2,3>>`
 - `<<256>>`
