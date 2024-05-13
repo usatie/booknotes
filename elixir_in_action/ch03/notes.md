@@ -49,3 +49,11 @@ person = {^expected_name, _} = {"Bob", 30}
 [^some_value | _] = Enum.sort([3,2,1])
 [_ | ^some_value | rest] = [1,2,3,4,5,6,7]
 ```
+
+### 3.1.6 Matching maps
+```
+%{name: name, age: age} = %{name: "Bob", age: 25}
+%{age: age} = %{name: "Bob", age: 25}
+%{name: name, works_at: works_at} = %{name: "Bob", age: 25}
+** (MatchError) no match of right hand side value: %{name: "Bob", age: 25}
+```
