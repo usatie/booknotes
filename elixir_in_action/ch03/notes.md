@@ -92,3 +92,17 @@ hello <> " world" = "hello world"
 error: expected <<_::integer-size(3)>> to be a binary but its number of bits is not divisible by 8
 "hello" <> <<_::24>> <> world = "hello   world"
 ```
+### 3.1.8 Compound matches
+```
+[_, {name, _}, _] = [{"bob", 25}, {"Alice", 30}, {"John", 35}]
+[_, {("Alice" = name), _}, _] = [{"bob", 25}, {"Alice", 30}, {"John", 35}]
+[_, {("Bob" = name), _}, person] = [{"bob", 25}, {"Alice", 30}, {"John", 35}]
+** (MatchError) no match of right hand side value: [{"bob", 25}, {"Alice", 30}, {"John", 35}]
+a = b = 1 + 3
+4
+a + b = 1 + 3
+error: cannot invoke remote function :erlang.+/2 inside a match
+date_time = {_, {15, _, _}} = :calendar.local_time()
+date_time = {_, {23, _, _}} = :calendar.local_time()
+** (MatchError) no match of right hand side value: {{2024, 5, 13}, {15, 59, 37}}
+```
