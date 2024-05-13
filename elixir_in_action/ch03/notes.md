@@ -25,3 +25,18 @@ person = {:person, "Bob", 25}
     (stdlib 5.2.3) erl_eval.erl:498: :erl_eval.expr/6
     iex:4: (file)
 ```
+
+### 3.1.4 Variables in patterns
+- Q. When is `_date` garbage-collected?
+- Q. Is `_` garbage-cllected as soon as possible?
+```
+{_, time} = :calendar.local_time()
+{_date, time} = :calendar.local_time() # anonymous variable
+{_, {hour, _, _}} = :calendar.local_time()
+{amount, amount, amount} = {127, 127, 127}
+{amount, amount, amount} = {127, 127, 1}
+expected_name = "Bob"
+{^expected_name, _} = {"Alice", 30}
+{^expected_name, _} = {"Bob", 30}
+person = {^expected_name, _} = {"Bob", 30}
+```
