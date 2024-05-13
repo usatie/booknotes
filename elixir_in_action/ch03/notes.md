@@ -40,3 +40,12 @@ expected_name = "Bob"
 {^expected_name, _} = {"Bob", 30}
 person = {^expected_name, _} = {"Bob", 30}
 ```
+
+### 3.1.5 Matching lists
+```
+[first, second, third] = [1, 2, 3]
+[head | tail] = [1, 2, 3]
+[min | _] = Enum.sort([3,2,1])
+[^some_value | _] = Enum.sort([3,2,1])
+[_ | ^some_value | rest] = [1,2,3,4,5,6,7]
+```
