@@ -46,6 +46,29 @@ fun.(circle)
 fun.(square)
 ```
 
+### 3.2.2 Guards
+- Type order
+  - number < atom < reference < fun < port < pid < tuple < map < list < bitstring (binary)
+- Comparison operators
+- Boolean operators
+- Arithmetic operators
+- Type-check functions from the Kernel module (is_number/1, is_atom/1, and so on)
+- Errors in the guard expression is internally handled, and the guard expression will just return false
+```
+defmodule TestNum do
+  def test(x) when is_number(x) and x < 0 do
+    :negative
+  end
+
+  def test(x) when x == 0 do
+    :zero
+  end
+
+  def test(x) when is_number(x) and x > 0 do
+    :positive
+  end
+end
+```
 
 ## 3.1 Pattern matching
 ### 3.1.1 The match operator
