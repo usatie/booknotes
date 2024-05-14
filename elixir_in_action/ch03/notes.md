@@ -31,6 +31,49 @@ defmodule ListHelper do
 end
 ```
 
+### 3.3.2 Classical branching expressions
+#### if and unless
+- Even one-liners
+```
+if condition, do: something, else: another_thing
+Kernel.if(condition, do: something, else: another_thing)
+def max(a, b) do
+  if a >= b, do: a, else: b
+end
+```
+```
+if result != :error, do: send_notification(...)
+unless result == :error, do: send_notification(...)
+```
+#### cond
+- Can be thought of as `if-else-if` pattern
+```
+def call_status(call) do
+  cond do
+    call.ended_at != nil -> :ended
+    call.started_at != nil -> :started
+    true -> :pending                     # Equivalent of a default clause
+  end
+end
+```
+#### case
+- Most suitable if you don't want to define a separate multiclause function
+```
+case expression do
+  pattern_1 -> ...
+  pattern_2 -> ...
+  ...
+  _ -> ...         # The default clause that always matches
+end
+
+def max(a, b) do
+  case a >= b do
+    true -> a
+    false -> b
+  end
+end
+```
+
 ## 3.2 Matching with functions
 - The argument specifiers are patterns
 ```
