@@ -1,4 +1,36 @@
 # 3. Control flow
+## 3.3 Conditionals
+### 3.3.1 Branchinig with multiclause functions
+- All the benefits of pattern matching
+- Recursions
+- j
+```
+defmodule TestList do
+  def empty?([]), do: true
+  def empty?([_|_]), do: false
+end
+
+defmodule Polymorphic do
+  def double(x) when is_number(x), do: 2 * x
+  def double(x) when is_binary(x), do: x <> x
+end
+
+Polymorphic.double(3)
+Polymorphic.double("hello")
+
+# Recursions
+defmodule Fact do
+  def fact(0), do: 1
+  def fact(n), do: n * fact(n - 1)
+end
+
+# Looping
+defmodule ListHelper do
+  def sum([]), do: 0
+  def sum([head | tail]), do: head + sum(tail)
+end
+```
+
 ## 3.2 Matching with functions
 - The argument specifiers are patterns
 ```
