@@ -69,6 +69,18 @@ defmodule TestNum do
   end
 end
 ```
+### 3.2.3 Multiclause lambdas
+- Multiclause lambdas play an important role in conditional runtime branching
+```
+test_num = fn
+  x when is_number(x) and x < 0 -> :negative
+  x when x == 0 -> :zero
+  x when is_number(x) and x > 0 -> :positive
+end
+test_num.(1)
+test_num.(0)
+test_num.(-1)
+```
 
 ## 3.1 Pattern matching
 ### 3.1.1 The match operator
