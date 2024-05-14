@@ -106,3 +106,13 @@ date_time = {_, {15, _, _}} = :calendar.local_time()
 date_time = {_, {23, _, _}} = :calendar.local_time()
 ** (MatchError) no match of right hand side value: {{2024, 5, 13}, {15, 59, 37}}
 ```
+### 3.1.9 General behavior
+- `pattern = term`
+1. ASSERT your expectations about the right-side term. If these expectations aren't met, an error is raised.
+2. BIND some parts of the term to variables from the pattern.
+https://hexdocs.pm/elixir/patterns-and-guards.html
+```
+~c"hello " ++ world = ~c"hello world"
+[?h, ?e, ?l, ?l, ?o, ?\s | world2] = ~c"hello world"
+```
+
