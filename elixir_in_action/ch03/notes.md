@@ -1,4 +1,52 @@
 # 3. Control flow
+## 3.2 Matching with functions
+- The argument specifiers are patterns
+```
+defmodule Rectangle do
+  def area({a, b}) do
+    a * b
+  end
+end
+
+Rectangle.area {2, 3}
+```
+### 3.2.1 Multiclause functions
+- Multiple definitions of the same function with the same arity
+- In the order they're specified in the source code and attempts to match the provided argument specifiers
+- The first clause that successfully matches all arguments is executed
+- Multiclause function is a single function
+- Default clause can be defined in the end
+```
+defmodule Geometry do
+  def area({:rectangle, a, b}) do
+    a * b
+  end
+  def area({:square, a}) do
+    a * a
+  end
+  def area({:circle, a}) do
+    a * a * 3.14
+  end
+  def area(unknown) do
+    {:error, {:unknown_shape, unknown}}
+  end
+end
+
+rectangle = {:rectangle, 4, 5}
+square = {:square, 5}
+circle = {:circle, 4}
+
+Geometry.area(rectangle)
+Geometry.area(circle)
+Geometry.area(square)
+
+fun = &Geometry.area/1
+fun.(rectangle)
+fun.(circle)
+fun.(square)
+```
+
+
 ## 3.1 Pattern matching
 ### 3.1.1 The match operator
 - `=` is the match operator
