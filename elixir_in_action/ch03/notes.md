@@ -74,6 +74,23 @@ def max(a, b) do
 end
 ```
 
+### 3.3.3 The with expression
+- Useful when you need to chain a couple of expressions and return the error of the first expression that fails
+- Chaining with `case` is noisy
+- Chaining with `with` is clean
+```
+with {:ok, login} <- {:ok, "alice"},
+     {:ok, email} <- {:ok, "some_email"} do
+  %{login: login, email: email}
+end
+```
+```
+UserExtraction.extract_user(%{})
+UserExtraction.extract_user(%{"login" => "Bob"})
+UserExtraction.extract_user(%{"login" => "Bob", "email" => "hello"})
+UserExtraction.extract_user(%{"login" => "Bob", "email" => "hello", "password" => "some_password"})
+```
+
 ## 3.2 Matching with functions
 - The argument specifiers are patterns
 ```
