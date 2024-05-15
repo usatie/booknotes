@@ -1,4 +1,11 @@
 # 3. Control flow
+## 3.4 Loops and iterations
+- The principal looping tool in Elixir is `recursion`
+### 3.4.1 Iterating with recursion
+- It is very basic recursion
+- iex natural_nums.ex
+- iex sum_list.ex
+
 ## 3.3 Conditionals
 ### 3.3.1 Branchinig with multiclause functions
 - All the benefits of pattern matching
