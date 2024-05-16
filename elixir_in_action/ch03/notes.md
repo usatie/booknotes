@@ -6,6 +6,9 @@
 - iex natural_nums.ex
 - iex sum_list.ex
 
+### 3.4.2 Tail function calls
+- Tail recursion doesn't consume additional memory
+
 ## 3.3 Conditionals
 ### 3.3.1 Branchinig with multiclause functions
 - All the benefits of pattern matching
