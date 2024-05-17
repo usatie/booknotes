@@ -8,6 +8,18 @@
 
 ### 3.4.2 Tail function calls
 - Tail recursion doesn't consume additional memory
+- a tail call can also happen in a conditional expression
+- `recursion_practice.ex`
+- `recursion_practice_tc.ex`
+
+### 3.4.3 Higher-order function
+https://hexdocs.pm/elixir/Enum.html
+```
+Enum.map([1, 2, 3], fn x -> 2 * x end)
+Enum.map([1, 2, 3], &(2 * &1))
+Enum.filter([1, 2, 3], fn x -> rem(x, 2) == 1 end)
+Enum.filter([1, 2, 3], &(rem(&1, 2) == 1))
+```
 
 ## 3.3 Conditionals
 ### 3.3.1 Branchinig with multiclause functions
