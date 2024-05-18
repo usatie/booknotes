@@ -13,12 +13,28 @@
 - `recursion_practice_tc.ex`
 
 ### 3.4.3 Higher-order function
+- Enum.map/2
+- Enum.filter/2
+- Enum.reduce/3
 https://hexdocs.pm/elixir/Enum.html
 ```
 Enum.map([1, 2, 3], fn x -> 2 * x end)
 Enum.map([1, 2, 3], &(2 * &1))
 Enum.filter([1, 2, 3], fn x -> rem(x, 2) == 1 end)
 Enum.filter([1, 2, 3], &(rem(&1, 2) == 1))
+```
+
+### 3.4.4 Comprehensions
+- Specify the collectable
+- Comprehension filter
+```
+for x <- [1,2,3], do: x*x
+for x <- [1,2,3], y <- [1,2,3], do: {x, y, x*y}
+for x <- 1..9, y <- 1..9, do: {x, y, x*y}
+multiplication_table = for x <- 1..9, y <- 1..9, into: %{}, do: {{x, y}, x*y}
+multiplication_table = for x <- 1..9, y <- 1..9, x <= y, into: %{}, do: {{x, y}, x*y}
+Map.get(multiplication_table, {7, 6})
+Map.get(multiplication_table, {6, 7})
 ```
 
 ## 3.3 Conditionals
