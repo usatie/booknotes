@@ -61,6 +61,10 @@ put_in(todo_list, [3, :title], "Theater")
 ```
 todo_list = TodoList.new(entries)
 ```
+### 4.2.5 Exercise: Importing from a file
+```
+todo_list = TodoList.CsvImporter.import("todos.csv")
+```
 
 ## 4.1 Abstracting with modules
 - Module-based abstractions aren't proper data types
