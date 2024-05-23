@@ -57,6 +57,10 @@ put_in(todo_list[3].title, "Theater")
 put_in(todo_list, [3, :title], "Theater")
 ```
 #### Exercise: Deleting an entry
+### 4.2.4 Iterative updates
+```
+todo_list = TodoList.new(entries)
+```
 
 ## 4.1 Abstracting with modules
 - Module-based abstractions aren't proper data types
