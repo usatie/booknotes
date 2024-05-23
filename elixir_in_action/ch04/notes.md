@@ -8,6 +8,22 @@
 3. Modifier functions return a modified version of the abstraction.
 4. Query functions return some other type of data.
 
+## 4.3 Polymorphism with protocols
+### 4.3.1 Protocol basics
+- Contract is called a protocol
+- Roughly equivalent to an OO interface
+```
+defprotocol String.Chars do
+  def to_string(term)
+end
+
+String.Chars.to_strin(1)
+String.Chars.to_strin(:an_atom)
+String.Chars.to_strin([1,2,3])
+#String.Chars.to_strin(TodoList.new())   # Error!
+#IO.puts(TodoList.new())                 # Error!
+```
+
 ## 4.2 Working with hierarchical data
 ### 4.2.1 Generating IDs
 ```
