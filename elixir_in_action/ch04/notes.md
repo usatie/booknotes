@@ -30,3 +30,39 @@ TodoList.entries(todo_list, ~D[2023-12-20])
 TodoList.entries(todo_list, ~D[2023-12-19])
 TodoList.entries(todo_list, ~D[2023-12-18])
 ```
+### 4.1.2 Composing abstractions
+### 4.1.3 Structuring data with maps
+### 4.1.4 Abstracting with structs
+https://hexdocs.pm/elixir/Kernel.html#defstruct/1
+```
+defmodule Fraction do
+  defstruct a: nil, b: nil
+  ...
+end
+
+one_half = %Fraction{a: 1, b: 2}
+one_half.a
+one_half.b
+%Fraction{a: foo, b: bar} = one_half
+%Fraction{} = one_half               # match
+%Fraction{} = %{a: 1, b: 2}          # no match
+one_quater = %Fraction{one_half | b: 4 }
+```
+#### Structs vs maps
+```
+one_half = %Fraction{a: 1, b: 2}
+# Enum.to_list(one_half)                         # Error (struct is not enumerable by default)
+Map.to_list(one_half)                            # OK
+one_quater = %{a: 1, b: 4, __struct__: Fraction} # This is Fraction!
+
+# %Fraction{a: a, b: b} = %{a: 1, b: 2}          # Error
+%{a: a, b: b} = %Fraction{a: 1, b: 2}            # OK
+
+another = Map.put(one_half, :d, 100)             # OK
+Fraction.value(another)                          # OK (pattern match can't guarantee that it has no extra keys)
+```
+#### Records
+https://hexdocs.pm/elixir/Record.html
+- `defrecord` and `defrecordp`
+- Records are present mostly for historical reasons
+- Interface Erlang library using `Record.extract/2` and `defrecord`
