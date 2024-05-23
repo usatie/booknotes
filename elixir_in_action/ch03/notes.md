@@ -20,8 +20,15 @@ https://hexdocs.pm/elixir/Enum.html
 ```
 Enum.map([1, 2, 3], fn x -> 2 * x end)
 Enum.map([1, 2, 3], &(2 * &1))
+
 Enum.filter([1, 2, 3], fn x -> rem(x, 2) == 1 end)
 Enum.filter([1, 2, 3], &(rem(&1, 2) == 1))
+
+# var sum = 0;
+# [1,2,3].forEach(function(element) {
+#   sum += element;
+# })
+Enum.reduce([1,2,3], 0, fn element, sum -> sum + element end))
 ```
 
 ### 3.4.4 Comprehensions
@@ -36,6 +43,38 @@ multiplication_table = for x <- 1..9, y <- 1..9, x <= y, into: %{}, do: {{x, y},
 Map.get(multiplication_table, {7, 6})
 Map.get(multiplication_table, {6, 7})
 ```
+
+### 3.4.5 Streams
+```
+employees = ["Alice", "Bob", "Charlie"]
+Enum.with_index(employees)
+employees
+|> Enum.with_index()
+|> Enum.each(fn {employee, index} -> IO.puts("#{index + 1}. #{employee}") end)
+
+[9, -1, "foo", 25, 49]
+|> Stream.filter(&(is_number(&1) and &1 > 0))
+|> Stream.map(&{&1, :math.sqrt(&1)})
+|> Stream.with_index()
+|> Enum.each(fn {{input, result}, index} -> IO.puts("#{index + 1}. sqrt(#{input}) = #{result}") end)
+
+def large_lines!(path) do
+  File.stream!(path)
+  |> Stream.map(&String.trim_trailing(&1, "\n"))
+  |> Enum.filter(&(String.length(&1) > 80))
+end
+```
+#### Infinite Streams
+```
+natural_numbers = Stream.iterate(1, fn previous -> previous + 1 end)
+Enum.take(natural_numbers, 10)
+
+Stream.repeatedly(fn -> IO.gets("> ") end)
+|> Stream.map(&String.trim_trailing(&1, "\n"))
+|> Enum.take_while(&(&1 != ""))
+```
+#### Practice Exercises
+- `enum_streams_practice.ex`
 
 ## 3.3 Conditionals
 ### 3.3.1 Branchinig with multiclause functions
