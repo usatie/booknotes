@@ -21,6 +21,42 @@ todo_list = TodoList.new() |>
 TodoList.entries(todo_list, ~D[2023-12-19])
 TodoList.entries(todo_list, ~D[2023-12-20])
 ```
+### 4.2.2 Updating entries
+```
+todo_list = TodoList.update_entry(todo_list, 1, &Map.put(&1, :date, ~D[2023-12-24]))
+```
+### 4.2.3 Imutable hierarchical updates
+- If you have hierarchical data, you can't directly modify part of it that resides deep in its tree.
+```
+def update_entry(todo_list, entry_id, updater_fun) do
+  case Map.fetch(todo_list.entries, entry_id) do
+    :error ->
+      todo_list
+    {:ok, old_entry} ->
+      new_entry = updater_fun.(old_entry)
+      new_entries = Map.put(todo_list.entries, new_entry.id, new_entry)
+      %TodoList{todo_list | entries: new_entries}
+  end
+end
+```
+#### Provided helpers
+- `Kernel.put_in/2` macro
+- Source : `todo_list`
+- Path : `[3].title`
+- `get_in/2, put_in/2, get_and_update_in/2` macros
+- `get_in/3, put_in/3, get_and_update_in/3` functions
+- these macros and functions rely on the Access module
+https://hexdocs.pm/elixir/Access.html
+```
+todo_list = %{
+  1 => %{date: ~D[2023-12-19], title: "Dentist"},
+  2 => %{date: ~D[2023-12-20], title: "Shopping"},
+  3 => %{date: ~D[2023-12-19], title: "Movies"}
+}
+put_in(todo_list[3].title, "Theater")
+put_in(todo_list, [3, :title], "Theater")
+```
+#### Exercise: Deleting an entry
 
 ## 4.1 Abstracting with modules
 - Module-based abstractions aren't proper data types
