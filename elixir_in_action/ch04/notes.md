@@ -7,6 +7,21 @@
 2. The module's functions usually expect an instance of the abstraction as the first argument.
 3. Modifier functions return a modified version of the abstraction.
 4. Query functions return some other type of data.
+
+## 4.2 Working with hierarchical data
+### 4.2.1 Generating IDs
+```
+$ iex todo_crud.ex
+
+todo_list = TodoList.new() |>
+  TodoList.add_entry(%{date: ~D[2023-12-19], title: "Dentist"}) |>
+  TodoList.add_entry(%{date: ~D[2023-12-20], title: "Shopping"}) |>
+  TodoList.add_entry(%{date: ~D[2023-12-20], title: "Movies"})
+
+TodoList.entries(todo_list, ~D[2023-12-19])
+TodoList.entries(todo_list, ~D[2023-12-20])
+```
+
 ## 4.1 Abstracting with modules
 - Module-based abstractions aren't proper data types
 - For example, a MapSet instance is also a map
@@ -66,3 +81,18 @@ https://hexdocs.pm/elixir/Record.html
 - `defrecord` and `defrecordp`
 - Records are present mostly for historical reasons
 - Interface Erlang library using `Record.extract/2` and `defrecord`
+### 4.1.5 Data transparency
+- Data in Elixir is always transparent
+- Clients can read any information from your structs
+```
+mapset = MapSet.new([:monday, :tuesday])
+inspect(mapset, structs: false)
+
+iex(1)> Fraction.new(1, 4) |> 
+...(1)> IO.inspect() |>
+...(1)> Fraction.add(Fraction.new(1, 4)) |>
+...(1)> IO.inspect() |>
+...(1)> Fraction.add(Fraction.new(1, 2)) |>
+...(1)> IO.inspect() |>
+...(1)> Fraction.value()
+```
