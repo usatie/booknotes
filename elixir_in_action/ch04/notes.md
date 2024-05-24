@@ -23,6 +23,25 @@ String.Chars.to_strin([1,2,3])
 #String.Chars.to_strin(TodoList.new())   # Error!
 #IO.puts(TodoList.new())                 # Error!
 ```
+### 4.3.2 Implementing a protocol
+- The protocol implementation doesn't need to be part of any module.
+- You can implement a protocol for a type, even if you can't modify the type's source code.
+https://hexdocs.pm/elixir/Protocol.html
+```
+defimpl String.Chars, for: Integer do
+  def to_string(term) do
+    Integer.to_string(term)
+  end
+end
+
+defimpl String.Chars, for: TodoList do
+  def to_string(_) do
+    "#TodoList"
+  end
+end
+String.Chars.to_string(TodoList.new())
+IO.puts(TodoList.new())
+```
 
 ## 4.2 Working with hierarchical data
 ### 4.2.1 Generating IDs
