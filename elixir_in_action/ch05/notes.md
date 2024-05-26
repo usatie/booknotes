@@ -224,3 +224,56 @@ TodoServer.add_entry(%{date: ~D[2023-12-19], title: "Movie"})
 TodoServer.entries(~D[2023-12-19])
 TodoServer.entries(~D[2023-12-20])
 ```
+## 5.4 Runtime considerations
+### 5.4.1 A process is sequential
+- Identify the bottleneck, and optimize it
+- Parallelization isn't a remedy for a poorly structured algorithm
+### 5.4.2 Unlimited process mailboxes
+- Theoretically unlimited
+- In practice, limited by available mmeory
+- Overgrown mailbox contents can significantly affect performance
+- You should introduce a match-all receive clause to deal with unexpected kinds of messages
+```
+defp loop
+  receive do
+    {:message, msg} -> do_something(msg)
+    other -> warn_about_unknown_message(other)
+  end
+
+  loop()
+end
+```
+### 5.4.3 Shared-nothing concurrency
+- Having many processes frequently send big messages may affect system performance
+- special case in which the data is copied by reference:
+1. binaries (including string) larger than 64 bytes
+2. hardcoded constants (also known as literals)
+3. terms created via the `:persistent_term` API
+https://www.erlang.org/doc/man/persistent_term.html
+- Garbage collection is concurrent and distribuetd
+- Instead of one large "stop-the-entire-system" collection, many smaller, typically faster, collections
+### 5.4.4 Scheduler inner workings
+- m:n threading
+- `iex --erl "+S 1"`
+- small execution window of approximately 2,000 function calls
+- Long-running CPU-bound work or a larger garbage collection might be performed on another thread (`dirty scheduler`)
+- I/O proces yields the execution to the scheduler
+```
+System.schedulers()
+```
+- `smp:8:8` vs `smp:1:1`
+```
+$ iex
+Erlang/OTP 26 [erts-14.2.5] [source] [64-bit] [smp:8:8] [ds:8:8:10] [async-threads:1] [jit] [dtrace]
+$ iex --erl "+S 1"
+Erlang/OTP 26 [erts-14.2.5] [source] [64-bit] [smp:1:1] [ds:1:1:10] [async-threads:1] [jit] [dtrace]
+```
+- Runs an infinite CPU-bound loop:
+```
+spawn(fn ->
+  Stream.repeatedly(fn -> :rand.uniform() end)
+  |> Stream.run()
+end)
+
+Enum.sum(1..1_000_000_000)
+```
