@@ -192,3 +192,15 @@ Calculator.mul(pid, 3)
 Calculator.div(pid, 5)
 Calculator.value(pid)
 ```
+### 5.3.4 Complex states
+- It's worth extracting the state manipulation to a separate module
+- Keeping the server process focused only on passing messages and keeping the state
+- You shouldn't abuse processes to avoid using the functional approach of transforming immutable data
+```
+todo_server = TodoServer.start()
+TodoServer.add_entry(todo_server, %{date: ~D[2023-12-19], title: "Dentist"})
+TodoServer.add_entry(todo_server, %{date: ~D[2023-12-20], title: "Shopping"})
+TodoServer.add_entry(todo_server, %{date: ~D[2023-12-19], title: "Movie"})
+TodoServer.entries(todo_server, ~D[2023-12-19])
+TodoServer.entries(todo_server, ~D[2023-12-20])
+```
