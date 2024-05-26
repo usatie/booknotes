@@ -204,3 +204,23 @@ TodoServer.add_entry(todo_server, %{date: ~D[2023-12-19], title: "Movie"})
 TodoServer.entries(todo_server, ~D[2023-12-19])
 TodoServer.entries(todo_server, ~D[2023-12-20])
 ```
+### 5.3.5 Registered processes
+- Give a process a local name
+- Only in the currently running BEAM instance
+- Important role in process discovery
+- Increasingly important when dealing with restarting processes and distribuetd system
+```
+Process.register(self(), :some_name)
+send(:some_name, :msg)
+receive do
+  msg -> IO.puts("received #{msg}")
+end
+```
+```
+todo_server = TodoServer.start()
+TodoServer.add_entry(%{date: ~D[2023-12-19], title: "Dentist"})
+TodoServer.add_entry(%{date: ~D[2023-12-20], title: "Shopping"})
+TodoServer.add_entry(%{date: ~D[2023-12-19], title: "Movie"})
+TodoServer.entries(~D[2023-12-19])
+TodoServer.entries(~D[2023-12-20])
+```
