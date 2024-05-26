@@ -169,3 +169,26 @@ defp loop(state) do
   loop(state)
 end
 ```
+### 5.3.3 Mutable state
+- From the outside, stateful processes are mutable
+- Sending a message is an operation with possible side effects
+- Server handles messages in the order received, so requests are handled in the proper order
+-
+```
+defp loop(state) do
+  new_state = 
+    receive do
+      ...
+    end
+  loop(new_state)
+end
+```
+```
+pid = Calculator.start()
+Calculator.value(pid)
+Calculator.add(pid, 10)
+Calculator.sub(pid, 5)
+Calculator.mul(pid, 3)
+Calculator.div(pid, 5)
+Calculator.value(pid)
+```
