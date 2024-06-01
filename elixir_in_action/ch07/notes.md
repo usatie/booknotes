@@ -71,3 +71,12 @@ average get 1.381032 µs
 - Encode the data into the Erlang external term format
 ### 7.3.1 Encoding and persisting
 - :erlang.term_to_binary/1
+### 7.3.2 Using the database
+```
+{:ok, cache} = Todo.Cache.start()
+bobs_list = Todo.Cache.server_process(cache, "bobs_list")
+Todo.Server.add_entry(
+    bobs_list,
+    %{date: ~D[2023-12-19], title: "Dentist"}
+)
+```
