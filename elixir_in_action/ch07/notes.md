@@ -56,3 +56,14 @@ if left_value == right_value do
   # raise an error
 end
 ```
+### 7.2.3 Analyzing process dependencies
+- Sufficient for a load of at least 200,000 requests per second
+- (at least 251,889 rps in my environment)
+- If you need to make sure part of the code is synchronized, it's best to run that code in a dedicated process.
+```
+$ mix new todo_cache
+$ cd todo_cache
+$ elixir --erl "+P 2000000" -S mix run -e LoadTest.run
+average put 3.970946 µs
+average get 1.381032 µs
+```
