@@ -67,3 +67,7 @@ $ elixir --erl "+P 2000000" -S mix run -e LoadTest.run
 average put 3.970946 µs
 average get 1.381032 µs
 ```
+## 7.3 Persisting data
+- Encode the data into the Erlang external term format
+### 7.3.1 Encoding and persisting
+- :erlang.term_to_binary/1
