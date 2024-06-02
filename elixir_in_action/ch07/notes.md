@@ -80,3 +80,49 @@ Todo.Server.add_entry(
     %{date: ~D[2023-12-19], title: "Dentist"}
 )
 ```
+### 7.3.3 Analyzing the system
+- If requests to the database come in ifaster than they can be handled, the process mailbox will grow and increasingly consume memory.
+- Q. What if a server get reply from timeout-request? Does it remain in the server's mailbox forever?
+### 7.3.4 Addressing the process bottleneck
+#### Bypassing the process
+- The reason for running a piece of code in a dedicated server:
+  - The code must manage a long-living state
+  - The code handles a kind of resource that can and should be reused between multiple invocations, such as a TCP connection, database connection, file handle, and so on.
+  - A critical section of the code must be synchronized. Only one instance of this code may be running in any momemnt.
+- We can store to the file directly from the to-do server process.
+- But the problem with this approach is that concurrency is unbound.
+#### Handling requests concurrently
+- Each request is serialized through the central database server process
+- But this server process spawns one-off worker processes that perform the actual request handling.
+- The concurrency is still unbound, so too many simultaneous clients might overload the disk I/O
+```
+def handle_cast({:store, key, data}, state) do
+  spawn(fn ->
+    key
+    |> file_name()
+    |> File.write!(:erlang.term_to_binary(data))
+  end)
+
+  {:noreply, state}
+end
+
+def handle_call({:get, key}, caller, state) do
+  spawn(fn ->
+    data = case File.read(file_name(key)) do
+      {:ok, contents} -> :erlang.binary_to_term(contents)
+      _ -> nil
+    end
+
+    GenServer.reply(caller, data)
+  end)
+
+  {:noreply, state}
+end
+```
+#### Limiting concurrency with pooling
+- A typical remedy for this problem is to introduce pooling
+- Essentially, this technique keeps the concurrency level under control
+- It works best when dealing with resources that can't handle unbound concurrency.
+https://github.com/devinus/poolboy
+https://github.com/elixir-lang/ecto
+### 7.3.5 Exercise: Pooling and synchronizing
