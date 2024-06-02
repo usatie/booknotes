@@ -10,13 +10,15 @@ defmodule Todo.Database do
   end
 
   def store(key, data) do
-    worker = choose_worker(key)
-    Todo.DatabaseWorker.store(worker, key, data)
+    key
+    |> choose_worker()
+    |> Todo.DatabaseWorker.store(key, data)
   end
 
   def get(key) do
-    worker = choose_worker(key)
-    Todo.DatabaseWorker.get(worker, key)
+    key
+    |> choose_worker()
+    |> Todo.DatabaseWorker.get(key)
   end
 
   @impl GenServer
