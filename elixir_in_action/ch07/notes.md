@@ -126,3 +126,9 @@ end
 https://github.com/devinus/poolboy
 https://github.com/elixir-lang/ecto
 ### 7.3.5 Exercise: Pooling and synchronizing
+### 7.3.6 Reasoning with processes
+- The main problem of cast is that the caller doesn't get any guarantees
+- Casts promote system responsiveness at the cost of reduced consistency
+- Calls promote consitency but reduce system responsiveness
+- Calls can also be used to apply back pressure to client processes. It prevents the client from generating to much work
+- If you're unsure, it's probably better to start with a call because it's more consistent. You can then consider switching to casts in places where you establish that calls hurt performance and system responsiveness.
