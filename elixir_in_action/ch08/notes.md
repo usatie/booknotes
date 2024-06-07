@@ -65,3 +65,77 @@ Q. Why rescue is necessary? Isn't catch enough?
 - A run-time error also has a value, which can be any arbitrary term
 - If a run-time error sin't handled, the corresponding process will terminate
 - Common idiom is to let the process crash and then do something about it
+## 8.2 Errors in concurrent systems
+- Automatic isolation and protection.
+- A crash on one process won't leave memory garbage.
+```
+spawn(fn -> 
+    spawn(fn -> 
+      Process.sleep(1000)
+      IO.puts("Process 2 finished")
+    end)
+    raise("Something went wrong")
+end)
+```
+### 8.2.1 Linking processes
+```
+spawn(fn -> 
+    spawn_link(fn -> 
+      Process.sleep(1000)
+      IO.puts("Process 2 finished")
+    end)
+    raise("Something went wrong")
+end)
+```
+- When a process terminates abnormally, the lniked process is also taken down.
+- Link as a communication channel for providing notifications about process terminations
+- If two processes are linked, and one of them terminates, the other process receives an exit signal - a notification that a process has crashed.
+- An exit signal contains the PID and exit reason
+#### Trapping exits
+- `msg` : `{:EXIT, from_pid, exit_reason}`
+- `exit_reason` : `{reason, where}`
+```
+spawn(fn -> 
+    Process.flag(:trap_exit, true)
+
+    spawn_link(fn -> raise("Something went wrong") end)
+    
+    receive do
+      msg -> IO.inspect(msg)
+    end
+end)
+```
+### 8.2.2 Monitors
+- `Process.monitor(target_pid)` for unidirectional propagation
+- Observer process won't crash when the monitored process terminates
+- `Process.demonitor(monitor_ref)` to stop monitoring
+- `msg` : `{:DOWN, monitor_ref, :process, from_pid, exit_reason}`
+```
+target_pid = spawn(fn -> 
+  Process.sleep(1000)
+end)
+
+Process.monitor(target_pid)
+receive do
+  msg -> IO.inspect(msg)
+end
+```
+## 8.3 Supervisors
+- A supervisor is a generic process that manages the life cycle of other processes
+- A worker is a non-supervisor process
+### 8.3.1 Preparing the existing code
+- `Supervisor.start_link(module, init_arg, options \\ [])`
+- `:strategy` known as restart strategy is mandatory
+- When `GenServer.call` is called, it sets up a temporary monitor that targets the server process.
+```
+Supervisor.start_link([Todo.Cache], strategy: :one_for_one)
+bobs_list = Todo.Cache.server_process("Bob's list")
+```
+### 8.3.2 Starting the supervisor process
+- Register the to-do cache under a local name to allow process discovery
+```
+cache_pid = Process.whereis(Todo.Cache)
+db_pid = Process.whereis(Todo.Database)
+Process.exit(cache_pid, :kill)
+Process.whereis(Todo.Cache)
+```
