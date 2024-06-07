@@ -3,8 +3,8 @@ defmodule Todo.Database do
 
   @db_folder "./persist"
 
-  def start do
-    GenServer.start(__MODULE__, nil,
+  def start_link do
+    GenServer.start_link(__MODULE__, nil,
       name: __MODULE__
     )
   end
@@ -27,7 +27,7 @@ defmodule Todo.Database do
     File.mkdir_p!(@db_folder)
     pool = Enum.reduce(0..2, %{}, fn index, workers ->
       db_folder = Path.join(@db_folder, "#{index}")
-      pid = Todo.DatabaseWorker.start(db_folder)
+      pid = Todo.DatabaseWorker.start_link(db_folder)
       Map.put(workers, index, pid)
     end)
     {:ok, pool}

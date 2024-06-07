@@ -139,3 +139,60 @@ db_pid = Process.whereis(Todo.Database)
 Process.exit(cache_pid, :kill)
 Process.whereis(Todo.Cache)
 ```
+### 8.3.3 Child specification
+1. How shoudl the child be started?
+2. What should be done if the child terminates?
+3. What term should be used to uniquely identify each child?
+```
+%{
+  id: Todo.Cache,
+  start: {Todo.Cache, :start_link, [nil]},
+}
+```
+- start field is a triplet: `{module, start_function, list_of_arguments}`
+- supervisor will call `apply(module, start_function, list_of_arguments)`
+```
+Supervisor.start_link(
+  [
+    %{
+      id: Todo.Cache,
+      start: {Todo.Cache, :start_link, [nil]},
+    }
+  ],
+  strategy: :one_for_one
+)
+```
+- This will invoke `Todo.Cache.start_link(nil)`
+```
+Todo.Cache.child_spec(nil)
+```
+https://hexdocs.pm/elixir/GenServer.html#module-how-to-supervise
+### 8.3.4 Wrapping the supervisor
+```
+Todo.System.start_link()
+```
+### 8.3.5 Using a callback module
+- `use Supervisor` to get more control (e.g. extra initialization before starting children)
+- more flexible with respect to hot-code reloading
+### 8.3.6 Linking all processes
+- We need to take down all existing to-do servers when cache server is down
+- After linking all the processes, the code below shows that length is not changed before/after exit
+```
+Todo.System.start_link()
+Todo.Cache.server_process("Bob's list")
+Todo.Cache.server_process("Bob's list")
+length(Process.list())
+Process.exit(Process.whereis(Todo.Cache), :kill)
+Todo.Cache.server_process("Bob's list")
+length(Process.list())
+```
+### 8.3.7 Restart frequency
+- maximum restart frequency
+- By default, 3 restarts in 5 seconds
+- After the maximum restart frequency was exceeded, the supervisor gave up and terminated, taking down the child processes as well
+```
+for _ <- 1..4 do
+  Process.exit(Process.whereis(Todo.Cache), :kill)
+  Process.sleep(200)
+end
+```
