@@ -1,0 +1,7 @@
+Elixir in Action teaches you to apply the new Elixir programming language to practical problems associated with scalability, concurrency, fault tolerance, and high availability.
+
+about the technology
+Elixir is a modern programming language that takes advantage of BEAM, the Erlang virtual machine, without the burden of Erlang's complex syntax and conventions. Elixir gives you Ruby-like elegance with the power to develop bulletproof distributed server systems that can handle massive numbers of simultaneous clients and run with almost no downtime.
+
+about the book
+Elixir in Action teaches you how to solve practical problems of scalability, concurrency, fault tolerance, and high availability using Elixir. You'll start with the language, learning basic constructs and building blocks. Then, you'll learn to think about problems using Elixir's functional programming mindset. With that solid foundation, you'll confidently explore Elixir's seamless integration with BEAM and Erlang's powerful OTP framework of battle-tested abstractions you can use immediately. Finally, the book provides guidance on how to distribute a system over multiple machines and control it in production.
