@@ -95,3 +95,23 @@ openssl enc -aes-128-cfb -e -in plain.txt -out cipher2.txt \
    -iv 000102030405060708090a0b0c0d0e0f
 wc -c plain.txt cipher1.txt cipher2.txt
 ```
+
+## 15.6 The Padding Oracle Attack
+### 15.6.2 How the Attack Works: the Main Idea
+- The padding oracle attack is mostly associated with the CBC decription mode
+- Basic Idea : From predictable `P_i` plaintext bytes (padding) and our own input bytes `C_i-1` (ciphertext), we can get the `D_i`!
+- `D_i = XOR(predictable P_i, input C_i-1)` (getting byte by byte)
+> We will only send these two blocks to the oracle, even though the original ciphertext has more than two blocks.
+```
+D_i = decrypt(C_i, key)
+P_i = XOR(D_i, C_i-1)
+```
+## 15.7 Programming using Cryptography APIs
+https://pycryptodome.readthedocs.io
+```
+pip install pycryptodome
+pip install pycryptodome-test-vectors
+python -m Crypto.SelfTest
+```
+## 15.8 Authenticated Encryption and the GCM Mode
+- authentication tag = auth_data + ciphertext + len(auth_data) + len(ciphertext)
